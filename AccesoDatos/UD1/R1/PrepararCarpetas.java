@@ -16,9 +16,15 @@ public class PrepararCarpetas {
         try {
             Files.createDirectories(datos);
             Files.createDirectories(copias);
-            Files.createDirectories(clubes);
-            Files.createDirectories(respaldo);
-            
+
+            if (Files.notExists(clubes)) {
+                Files.createFile(clubes);
+            }
+
+            if (Files.notExists(respaldo)) {
+                Files.createFile(respaldo);
+            }
+
         } catch (IOException e) {
             System.err.println("No se pudo acceder al archivo: "
                     + e.getMessage());
