@@ -6,6 +6,26 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class PrepararCarpetas {
+
+    // Método para mostrar el nombre de los archivos de un directorio y su tamaño
+    public static String mostrarArchivosEnDirectorio(Path rutaDirectorio) {
+        String mensajeAMostrar = "";
+
+        // Cadena de nombre y peso de archivos en lista
+        try (DirectoryStream<Path> elementos = Files.newDirectoryStream(rutaDirectorio)) {
+            for (Path elemento : elementos) {
+                if (Files.isRegularFile(elemento)) {
+                    mensajeAMostrar += "-> " + elemento.getFileName() + " - " + Files.size(elemento) + " bytes";
+                }
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return mensajeAMostrar;
+    }
+
+    // =================== MAIN =================== //
     public static void main(String[] args) {
         // Creo las rutas
         Path datos = Path.of("datos");
@@ -32,18 +52,10 @@ public class PrepararCarpetas {
         }
 
         // Mostrar los bytes de cada archivo y si existe
-        // Primero en directorio datos
-        try (DirectoryStream<Path> elementosEnDatos = Files.newDirectoryStream(datos)) {
-            System.err.println("ARCHIVOS DENTRO DE DATOS: ");
-            for (Path elemento : elementosEnDatos) {
-                if (Files.isRegularFile(elemento)) {
-                    System.out.println("-> " + elemento.getFileName() + " - " + Files.size(elemento) + " bytes ");
-                }
-            }
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
-
+        // Primero en directorio datos y luego la de copias
+        System.out.println("[ARCHIVOS EN " + datos.toAbsolutePath() + "]" + "\n" + mostrarArchivosEnDirectorio(datos));
+        System.out.println("\n-------------------------\n");
+        System.out.println("ARCHIVOS EN " + copias.toAbsolutePath() + "]" + "\n" + mostrarArchivosEnDirectorio(copias));
     }
 
 }
