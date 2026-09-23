@@ -34,9 +34,10 @@ public class PrepararCarpetas {
         // Mostrar los bytes de cada archivo y si existe
         // Primero en directorio datos
         try (DirectoryStream<Path> elementosEnDatos = Files.newDirectoryStream(datos)) {
+            System.err.println("ARCHIVOS DENTRO DE DATOS: ");
             for (Path elemento : elementosEnDatos) {
                 if (Files.isRegularFile(elemento)) {
-                    System.out.println(elemento.getFileName());
+                    System.out.println("-> " + elemento.getFileName() + " - " + Files.size(elemento) + " bytes ");
                 }
             }
         } catch (IOException e) {
