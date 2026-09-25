@@ -36,7 +36,10 @@ public class RegistroClubes {
                 ciudad = MisUtiles.validarCadenaNoVacia("Introduce el nombre de la ciudad: ", MENSAJE_ERROR_CADENA,
                         input);
                 try {
-                    Files.createDirectories(rutaClubes.getParent());
+                    // Comprueba si existe el directorio
+                    if(Files.isDirectory(rutaClubes.getParent())){
+                        Files.createDirectories(rutaClubes.getParent());
+                    }
                     // CREA ARCHIVO SI NO EXISTE Y ESCRIBE
                     try (BufferedWriter salida = Files.newBufferedWriter(
                             rutaClubes, StandardCharsets.UTF_8,
