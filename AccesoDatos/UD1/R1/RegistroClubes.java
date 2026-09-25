@@ -37,7 +37,7 @@ public class RegistroClubes {
                         input);
                 try {
                     // Comprueba si existe el directorio
-                    if(Files.isDirectory(rutaClubes.getParent())){
+                    if(!Files.isDirectory(rutaClubes)){
                         Files.createDirectories(rutaClubes.getParent());
                     }
                     // CREA ARCHIVO SI NO EXISTE Y ESCRIBE
