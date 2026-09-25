@@ -23,13 +23,15 @@ public class RegistroClubes {
 
         Scanner input = new Scanner(System.in);
 
-        // PIDE LOS INPUT
+        // ======================= ESCRITURA Y LECTURA, INPUTS ====================
         while (id >= 0) {
+            // Pide la id (negativo para salir)
             id = MisUtiles.pideNumeroEntero("Introduce la ID del club: ", "¡ERROR! Debes introducir un número entero",
                     input);
 
             // Comprueba si quiere seguir escribiendo
             if (id >= 0) {
+                // Petición de nombre y ciudad
                 nombre = MisUtiles.validarCadenaNoVacia("Introduce el nombre del club: ", MENSAJE_ERROR_CADENA, input);
                 ciudad = MisUtiles.validarCadenaNoVacia("Introduce el nombre de la ciudad: ", MENSAJE_ERROR_CADENA,
                         input);
