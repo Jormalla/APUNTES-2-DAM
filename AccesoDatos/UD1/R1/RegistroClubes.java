@@ -56,5 +56,7 @@ public class RegistroClubes {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+
+        input.close();
     }
 }
