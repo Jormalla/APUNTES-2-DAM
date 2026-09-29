@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import Bibliotecas.MisUtiles;
+
 public class Ejercicio1 {
     public static void main(String[] args) {
         Path rutaVidejojuegos = Path.of("AccesoDatos", "UD1", "R2", "videojuegos.csv");
@@ -13,8 +15,7 @@ public class Ejercicio1 {
         try {
             // Comprueba que exista el archivo
             // Mensaje de ERROR NO EXISTE
-            if (Files.notExists(rutaVidejojuegos)) {
-                System.out.println("No existe el archivo en AccesoDatos/UD1/R2/.");
+            if (!MisUtiles.comprobarRuta(rutaVidejojuegos)) {
                 return;
             }
 
