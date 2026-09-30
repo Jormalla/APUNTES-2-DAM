@@ -357,18 +357,4 @@ public class MisUtiles {
         return confirma;
 
     }
-
-    /**
-     * MÉTODO PARA COMPROBAR SI UNA RUTA EXISTE
-     * @param ruta ruta que se quiere comprobar
-     * @return devuelve true o false dependiendo de si existe o no la ruta
-     */
-    public static boolean comprobarRuta(Path ruta){
-        boolean existe = Files.exists(ruta);
-        if (!existe) {
-            consoleLn("La ruta no existe.");
-        }
-
-        return existe;
-    }
 }

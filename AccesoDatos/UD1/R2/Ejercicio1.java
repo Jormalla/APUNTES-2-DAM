@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import Bibliotecas.MisUtiles;
+import Bibliotecas.Ficheros;
 
 public class Ejercicio1 {
     public static void main(String[] args) {
@@ -15,33 +15,34 @@ public class Ejercicio1 {
         try {
             // Comprueba que exista el archivo
             // Mensaje de ERROR NO EXISTE
-            if (!MisUtiles.comprobarRuta(rutaVidejojuegos)) {
-                return;
-            }
+            if (Ficheros.comprobarRuta(rutaVidejojuegos,
+                    "¡ERROR! El archivo no existe en la ruta: " + rutaVidejojuegos)) {
 
-            // Hace resguardo del contenido
-            List<String> texto = Files.readAllLines(
-                    rutaVidejojuegos, StandardCharsets.UTF_8);
+                // Hace resguardo del contenido
+                List<String> texto = Files.readAllLines(
+                        rutaVidejojuegos, StandardCharsets.UTF_8);
 
-            // Recorre todas las lineas del texto
-            for (int i = 1; i < texto.size(); i++) {
-                columnas = texto.get(i).split(";", -1);
+                // Recorre todas las lineas del texto
+                for (int i = 1; i < texto.size(); i++) {
+                    columnas = texto.get(i).split(";", -1);
 
-                // Comprueba que tenga 3 columnas e imprime el texto.
-                if (columnas.length == 3) {
-                    try {
-                        int id = Integer.parseInt(columnas[0]);
-                        nombre = columnas[1];
-                        plataforma = columnas[2];
-                        System.out.println("[" + id + "]" + " -> " + nombre + " - " + plataforma);
+                    // Comprueba que tenga 3 columnas e imprime el texto.
+                    if (columnas.length == 3) {
+                        try {
+                            int id = Integer.parseInt(columnas[0]);
+                            nombre = columnas[1];
+                            plataforma = columnas[2];
+                            System.out.println("[" + id + "]" + " -> " + nombre + " - " + plataforma);
 
-                    // NO TIENE UN NÚMERO VÁLIDO
-                    } catch (NumberFormatException e) {
-                        System.out.println("El ID no contiene un número válido.");
+                            // NO TIENE UN NÚMERO VÁLIDO
+                        } catch (NumberFormatException e) {
+                            System.out.println("El ID no contiene un número válido.");
+                        }
+                        // NO SIGUE EL FORMATO DE 3 COLUMNAS
+                    } else {
+                        System.out.println(
+                                "¡VAYA! Esta linea del archivo parece que no sigue el formato de 3 columnas (ID, NOMBRE, PLATAFORMA)");
                     }
-                // NO SIGUE EL FORMATO DE 3 COLUMNAS
-                } else {
-                    System.out.println("¡VAYA! Esta linea del archivo parece que no sigue el formato de 3 columnas (ID, NOMBRE, PLATAFORMA)");
                 }
             }
 
