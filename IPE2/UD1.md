@@ -42,4 +42,25 @@ No obstante, también existen otras opciones: Internet; autocandidatura; relacio
 | No se pone en riesgo el capital | Ejecutar órdenes recibidas |
 
 #### C. Empleo público
-Para acceder 
+Para acceder a un puesto en la Administración públiuca es necesario superar un **proceso de selección** que se realiza mediante oposición, concurso o concurso-oposición.
+
+Si el acceso es por concurso, únicamente se califica por puntos de los **méritos** de los aspirantes. Si se exige una oposición, tendrás que realizar una o más pruebas o exámenes para ganar una de las plazas disponibles. Finalmente, si la modalidad es el concurso-oposición, consistirá en realizar ambos sistemas anteriores.
+
+Los empleos en la Administración se ofertan a través de una **convocatoria pública**.
+
+Pueden existir la siguientes **modalidades**: funcionariado de carrera; funcionariado interino; personal laboral.
+
+| VENTAJAS | INCONVENIENTES |
+| --- | --- |
+| Trabajo estable | Gran esfuerzo para el acceso |
+| Posibilidad de promoción y formación | Requiere constancia e inversión de tiempo y dinero para lograrlo |
+| Remuneración segura | Menor posibilidad de autonomía e iniciativa |
+| Horario fijo | Sin iniciativa propia |
+
+### 1.2. ¿TRABAJAR EN EUROPA?
+#### A. Red EURES
+Eurepean Employment Services (EURES) es una red de cooperación para el empleo y para la libre circulación de personas trabajadoras en la Unión Europea. Está dirigida tanto a personas interesadas en trasladarse a otro país de Europa para estudiar o trabajar como a empresas que deseen contratar personal de otro países.
+
+#### B. Europass
+Es un conjunto gratuito de herramientas online que permiten gestionar las competencias y planificar el aprendizaje y la carrera profesional en Europa.
+
