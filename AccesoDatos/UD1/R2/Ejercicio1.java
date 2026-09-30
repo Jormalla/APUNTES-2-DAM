@@ -15,7 +15,7 @@ public class Ejercicio1 {
         try {
             // Comprueba que exista el archivo
             // Mensaje de ERROR NO EXISTE
-            if (Ficheros.comprobarRuta(rutaVidejojuegos,
+            if (Ficheros.validarRuta(rutaVidejojuegos,
                     "¡ERROR! El archivo no existe en la ruta: " + rutaVidejojuegos)) {
 
                 // Hace resguardo del contenido

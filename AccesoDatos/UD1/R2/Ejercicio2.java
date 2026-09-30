@@ -10,7 +10,7 @@ public class Ejercicio2 {
         Path rutaAlumnos =  Path.of("AccesoDatos", "UD1", "R2", "alumnos.csv");
 
         try {
-           if (Ficheros.comprobarRuta(rutaAlumnos, "¡ERROR! El archivo no existe en la ruta: " + rutaAlumnos)) {
+           if (Ficheros.validarRuta(rutaAlumnos, "¡ERROR! El archivo no existe en la ruta: " + rutaAlumnos)) {
             
            }
 
