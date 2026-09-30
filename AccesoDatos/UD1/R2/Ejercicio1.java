@@ -16,7 +16,7 @@ public class Ejercicio1 {
             // Comprueba que exista el archivo
             // Mensaje de ERROR NO EXISTE
             if (Ficheros.validarRuta(rutaVidejojuegos,
-                    "¡ERROR! El archivo no existe en la ruta: " + rutaVidejojuegos)) {
+                    "¡ERROR! El archivo no existe en la ruta: " + rutaVidejojuegos) && Ficheros.validarArchivo(rutaVidejojuegos, "¡ERROR! el archivo no existe")) {
 
                 // Hace resguardo del contenido
                 List<String> texto = Files.readAllLines(

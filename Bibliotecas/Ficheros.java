@@ -21,5 +21,22 @@ public class Ficheros {
 
         return existe;
     }
+
+     /**
+     * MÉTODO PARA COMPROBAR SI UN ARCHIVO EXISTE CON UN MENSAJE DE ERROR SI NO EXISTE
+     * Se hace uso de la biblioteca MisUtiles para mostrar por consola el mensaje de error
+     * @param archivo archivo que se quiere comprobar
+     * @param mensajeError contiene el mensaje de error que lanzará por consola si el archivo no existe
+     * @return devuelve true o false dependiendo de si existe o no la el archivo
+     * 
+     * @see MisUtiles
+     */
+    public static boolean validarArchivo(Path archivo, String mensajeError){
+        boolean existe = Files.isRegularFile(archivo);
+          if (!existe) {
+            MisUtiles.consoleLn(mensajeError);
+        }
+        return existe;
+    }
     
 }
