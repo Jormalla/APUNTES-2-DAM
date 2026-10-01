@@ -14,14 +14,15 @@ import Bibliotecas.Ficheros;
 public class Ejercicio3 {
     public static void main(String[] args) {
         // VARIABLES Y RUTAS
-        int cantidadStock, numeroColumnasNecesarias = 3, idDeFila;
-        String id, nombreProducto = "";
+        int cantidadStock, numeroColumnasNecesarias = 3;
+        String id;
         Path rutaInventario = Path.of("AccesoDatos", "UD1", "R2", "inventario.csv");
         final String MENSAJE_ERROR_ID = "¡ERROR! Debes introducir un id válido",
                 MENSAJE_ERROR_STOCK = "¡ERROR! Debe ser una cantidad posible";
         ArrayList<String> ids_posibles = new ArrayList<>();
         String[] columnas;
         List<String> nuevas = new ArrayList<>();
+        List<String> avisos = new ArrayList<>();
 
         Scanner teclado = new Scanner(System.in);
 
@@ -30,28 +31,24 @@ public class Ejercicio3 {
             if (Ficheros.validarRuta(rutaInventario, "¡ERROR! La ruta del archivo inventario.csv No existe")
                     && Ficheros.validarArchivo(rutaInventario, "¡ERROR! El archivo inventario.csv No existe")) {
 
-                // Recorre el contenido del archivo
+                // Recorre el contenido del archivo (salta la cabecera)
                 List<String> contenidoArchivo = Files.readAllLines(rutaInventario, StandardCharsets.UTF_8);
                 for (int i = 1; i < contenidoArchivo.size(); i++) {
                     columnas = contenidoArchivo.get(i).split(";", -1);
+                    int numeroLinea = i + 1; // línea real en el archivo (la 1 es la cabecera)
 
-                    // Comprueba que el archivo tenga 3 columnas y que la columna ID tenga un número
-                    // válido
+                    // Comprueba que la fila tenga 3 columnas y que el ID sea un número válido
                     if (columnas.length == numeroColumnasNecesarias) {
                         try {
-                            nombreProducto = columnas[1];
-                            idDeFila = Integer.parseInt(columnas[0]);
-
-                            // Guardo el contenido de cada primera columna en las opciones posibles (La id)
+                            Integer.parseInt(columnas[0]);
                             ids_posibles.add(columnas[0]);
-
-                            // NO TIENE UN NÚMERO VÁLIDO
                         } catch (NumberFormatException e) {
-                            System.err.println("El ID de " + nombreProducto + " no contiene un número válido.");
+                            avisos.add("Línea " + numeroLinea + ": el ID '" + columnas[0]
+                                    + "' no es un número válido.");
                         }
                     } else {
-                        MisUtiles.consoleLn("¡VAYA! La fila " + (i - 1) + " parece que no contiene "
-                                + numeroColumnasNecesarias + " columnas.");
+                        avisos.add("Línea " + numeroLinea + ": tiene " + columnas.length
+                                + " columnas (se esperaban " + numeroColumnasNecesarias + ").");
                     }
                 }
 
@@ -62,8 +59,17 @@ public class Ejercicio3 {
                     System.err.println("No se pudo leer: " + e.getMessage());
                 }
 
+                // Muestra las líneas incorrectas debajo del archivo
+                if (!avisos.isEmpty()) {
+                    System.out.println("\nLíneas que no cumplen el formato:");
+                    for (String aviso : avisos) {
+                        System.out.println(aviso);
+                    }
+                }
+
                 // Petición de la id
-                id = MisUtiles.pideSeleccion("Introduce la id del producto que desea modificar: ", teclado, ids_posibles, MENSAJE_ERROR_ID);
+                id = MisUtiles.pideSeleccion("Introduce la id del producto que desea modificar: ", teclado,
+                        ids_posibles, MENSAJE_ERROR_ID);
                 // Petición de la cantidad Stock
                 cantidadStock = MisUtiles.pideNumeroEnteroPositivo("Introduce una cantidad de stock: ",
                         MENSAJE_ERROR_STOCK, teclado);
@@ -71,17 +77,16 @@ public class Ejercicio3 {
                 // Recorre el archivo hasta encontrar el id y modifica su stock
                 for (int i = 0; i < contenidoArchivo.size(); i++) {
                     columnas = contenidoArchivo.get(i).split(";", -1);
-                    if (columnas[0].equals(id)) {
+                    if (columnas.length == numeroColumnasNecesarias && columnas[0].equals(id)) {
                         columnas[2] = cantidadStock + "";
                         nuevas.add(String.join(";", columnas));
-                    // Si no es la id, mete la linea al completo
-                    }else{
+                    } else {
+                        // Si no es la id, mete la línea al completo
                         nuevas.add(contenidoArchivo.get(i));
                     }
                 }
                 // Reescribe el archivo original
                 Files.write(rutaInventario, nuevas, StandardCharsets.UTF_8);
-
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
