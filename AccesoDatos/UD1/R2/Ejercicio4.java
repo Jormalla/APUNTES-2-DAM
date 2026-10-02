@@ -16,7 +16,7 @@ public class Ejercicio4 {
             }
             
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println(e.getMessage());
         }
     }
 }
