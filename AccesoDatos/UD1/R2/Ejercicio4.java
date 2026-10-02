@@ -13,6 +13,8 @@ public class Ejercicio4 {
             if ((Ficheros.validarRuta(rutaReservas, "¡ERROR! La ruta del archivo reservas.csv No existe")
                     && Ficheros.validarArchivo(rutaReservas, "¡ERROR! El archivo reservas.csv No existe"))) {
                 
+                // MUESTRA EL ARCHIVO Y PETICIÓN DE ID
+                Ficheros.mostrarArchivo(rutaReservas);
             }
             
         } catch (Exception e) {
