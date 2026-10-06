@@ -1,54 +1,90 @@
 # Función bucle para la validación de datos
-def pedirCadenaNoVacia(mensajeInput, avisoError):
+def pedir_cadena_no_vacia(mensaje_input, aviso_error):
   while True:
-    cadenaAComprobar = input(mensajeInput)
-    if len(cadenaAComprobar.strip()) == 0:
-      print(avisoError)
+    cadena_a_comprobar = input(mensaje_input)
+    if len(cadena_a_comprobar.strip()) == 0:
+      print(aviso_error)
     else:
       break
-  return cadenaAComprobar
+  return cadena_a_comprobar
 
 # Valida si el input es un número y lo transforma a float
-def pedirNumeroNoNegativo(mensajeInput, avisoError, mensajeFalloEnNumero):
+def pedir_numero_no_negativo(mensaje_input, aviso_error, mensaje_fallo_en_numero):
   while True:
     # Valida que no esté vacio
-    numeroAComprobar = pedirCadenaNoVacia(mensajeInput, avisoError)
+    numero_a_comprobar = pedir_cadena_no_vacia(mensaje_input, aviso_error)
     
     # Intenta convertir a float y verifica si es positivo
     try:
-      valorNumerico = float(numeroAComprobar)
-      if valorNumerico >= 0:
-        return valorNumerico  # Devuelve el número en float
+      valor_numerico = float(numero_a_comprobar)
+      if valor_numerico >= 0:
+        return valor_numerico  # Devuelve el número en float
       else:
-        print(mensajeFalloEnNumero)
+        print(mensaje_fallo_en_numero)
     except ValueError:
       # Si float() falla
-      print(mensajeFalloEnNumero)
+      print(mensaje_fallo_en_numero)
 
-# Valida que sea un número positivo mayor o igual a 0 y que no sea mayor a 100
-def pedirNumeroEnRango(numeroMinimo, numeroMaximo, mensajeInput, avisoError, mensajeFalloEnNumero):
+# Valida si el input es un número y lo transforma a int
+def pedir_numero_entero_no_negativo(mensaje_input, aviso_error, mensaje_fallo_en_numero):
+  while True:
+    # Valida que no esté vacio
+    numero_a_comprobar = pedir_cadena_no_vacia(mensaje_input, aviso_error)
+    
+    # Intenta convertir a int y verifica si es positivo
+    try:
+      valor_numerico = int(numero_a_comprobar)
+      if valor_numerico >= 0:
+        return valor_numerico  # Devuelve el número en int
+      else:
+        print(mensaje_fallo_en_numero)
+    except ValueError:
+      # Si int() falla
+      print(mensaje_fallo_en_numero)
+
+
+# Valida que sea un número entero en el rango
+def pedir_numero_entero_en_rango(numero_minimo, numero_maximo, mensaje_input, aviso_error, mensaje_fallo_en_numero):
  while True:
     # Valida que no esté vacio
-    numeroAComprobar = pedirCadenaNoVacia(mensajeInput, avisoError)
+    numero_a_comprobar = pedir_cadena_no_vacia(mensaje_input, aviso_error)
+
+    # Intenta convertir a int y verifica si es positivo
+    try:
+      valor_numerico = int(numero_a_comprobar)
+      if (valor_numerico >= numero_minimo and valor_numerico <= numero_maximo):
+        return valor_numerico  # Devuelve el número en float
+      else:
+        print(mensaje_fallo_en_numero)
+    except ValueError:
+      # Si int() falla
+      print(mensaje_fallo_en_numero)
+
+# Valida que sea un número en el rango
+def pedir_numero_en_rango(numero_minimo, numero_maximo, mensaje_input, aviso_error, mensaje_fallo_en_numero):
+ while True:
+    # Valida que no esté vacio
+    numero_a_comprobar = pedir_cadena_no_vacia(mensaje_input, aviso_error)
 
     # Intenta convertir a float y verifica si es positivo
     try:
-      valorNumerico = float(numeroAComprobar)
-      if (valorNumerico >= numeroMinimo and valorNumerico <= numeroMaximo):
-        return valorNumerico  # Devuelve el número en float
+      valor_numerico = float(numero_a_comprobar)
+      if (valor_numerico >= numero_minimo and valor_numerico <= numero_maximo):
+        return valor_numerico  # Devuelve el número en float
       else:
-        print(mensajeFalloEnNumero)
+        print(mensaje_fallo_en_numero)
     except ValueError:
       # Si float() falla
-      print(mensajeFalloEnNumero)
+      print(mensaje_fallo_en_numero)
 
 # Valida que el telefono ingresado siga el patrón de 6 dígitos xxx-xxx-xxx
-def pedirTelefono(mensajeInput, avisoError, avisoErrorLongitudNoNumero):
+def pedir_telefono(mensaje_input, aviso_error, aviso_error_longitud_no_numero):
   LONGITUD_NUMERO_TELEFONO = 9
   while True:
-    telefonoAComprobar = pedirCadenaNoVacia(mensajeInput, avisoError)
-    if not (len(telefonoAComprobar) >= LONGITUD_NUMERO_TELEFONO and telefonoAComprobar.isdigit()):
-      print(avisoErrorLongitudNoNumero)
+    telefono_a_comprobar = pedir_cadena_no_vacia(mensaje_input, aviso_error)
+    if not (len(telefono_a_comprobar) >= LONGITUD_NUMERO_TELEFONO and telefono_a_comprobar.isdigit()):
+      print(aviso_error_longitud_no_numero)
     else: 
       break
-  return telefonoAComprobar
+  return telefono_a_comprobar
+
