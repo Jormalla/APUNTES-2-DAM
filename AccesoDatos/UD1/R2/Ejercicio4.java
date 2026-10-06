@@ -54,5 +54,7 @@ public class Ejercicio4 {
             System.err.println(e.getMessage());
         }
 
+        input.close();
+
     }
 }
