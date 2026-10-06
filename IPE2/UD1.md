@@ -107,3 +107,27 @@ Algunos portales de empleo público son:
 
 **Networking**: crear una red de contactos con personas que puedan ayudarte en tu búsqueda de empleo. Estas conexiones podrás encontrarlas en tu entorno más cercano (amistades, compañeras, familiares etc.) o mediante las redes sociales o las redes profesionales.
 
+### 2.2. EL PERFIL PROFESIONAL
+Nuestras características tienen que estar alineadas con las demandas de las empresas para poder cubrir los puestos de trabajo ofertados.
+
+Un perfil profesional es una descripción de las caracteríticas técnicas, personales y sociales, así como de la experiencia de una persona, para poder afrontar las tareas y responsabilidades de un puesto de trabajo.
+
+**El perfil profesional**
+- La formación que el aspirante debe poseer.
+- Conocimientos específicos para realizar las funciones del puesto.
+- Aptitudes y habilidades.
+- Personalidad.
+- Otros elementos.
+
+**¿Qué es un profesiograma?**
+Es una herramienta que realizan los departamentos de Recursos Humanos de las empresas para facilitar el proceso de selección de aspirantes.
+Su objetivo es definir en un gráfico las exigencias del puesto de trabajo y así poder estudiar si la persona candidata se ajusta al puesto concreto.
+
+**La reputación en línea o digital** es el pretigio de una persona o compañía en internte. Las publicaciones y las interacciones con otras personas afectan a la reputación.
+
+### 2.3. LA ELECCIÓN PROFESIONAL
+Los elementos que condicionan nuestra elección profesional son: situación personal; formación; experiencia profesional previa en el mismo sector o en otros; aficiones; vinculación a asociaciones; características familiares; entorno social; condiciones económicas; entorno social; condiciones económicas.
+
+Para la toma de decisiones es muy útil realizar un análisis DAFO (debilidades, amenazas fortalezas y oportunidades).
+
+Una herramienta complementaria al DAFO es el CAME (acrónimo de corregir, afrontar, mantener y explorar), con la que podemos optinmizar las conclusiones extraídas del DAFO.
