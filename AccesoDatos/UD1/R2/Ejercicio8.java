@@ -62,7 +62,7 @@ public class Ejercicio8 {
             while (sigueEnMenu) {
                 seleccionMenu = MisUtiles.pideSeleccion(INTERFAZMENU, input, OPCIONESMENU, MENSAJE_ERROR_MENU);
 
-                // ============================= OPCIÓN 1: NUEVO PRÉSTAMO ============================= //
+                // =================== OPCIÓN 1: NUEVO PRÉSTAMO ======================= //
                 if (seleccionMenu.equals("1")) {
                     // Pide el id, si está repetido le pregunta si quiere continuar
                     boolean deseaContinuar;
@@ -70,32 +70,41 @@ public class Ejercicio8 {
                         deseaContinuar = true;
                         id = MisUtiles.pideNumeroEnteroNoNegativo(PETICION_ID, ERROR_NUMERO_NEGATIVO, input);
 
-                        if (idsArchivo.contains(id+"")) {
+                        if (idsArchivo.contains(id + "")) {
                             MisUtiles.consoleLn(ERROR_EL_ID_EXISTE);
-                            if  (!MisUtiles.confirmarAccion(DESEA_CONTINUAR, input)) {
+                            if (!MisUtiles.confirmarAccion(DESEA_CONTINUAR, input)) {
                                 deseaContinuar = false;
                             }
                         }
-                    } while (idsArchivo.contains(id+"") && deseaContinuar);
+                    } while (idsArchivo.contains(id + "") && deseaContinuar);
 
                     // DESEA CONTINUAR - pide el nombre y material - añade el registro
                     if (deseaContinuar) {
                         nombre = MisUtiles.validarCadenaNoVacia(PETICION_NOMBRE, ERROR_CAMPO_VACIO, input);
                         material = MisUtiles.validarCadenaNoVacia(PETICION_MATERIAL, ERROR_CAMPO_VACIO, input);
 
-                        
+                        // Añade el registro
+                        try (BufferedWriter salida = Files.newBufferedWriter(
+                                rutaPrestamos, StandardCharsets.UTF_8,
+                                StandardOpenOption.CREATE,
+                                StandardOpenOption.APPEND)) {
+                            salida.write(id + ";" + nombre + ";" + material);
+                            salida.newLine();
+                            // Ordena el csv
+                            Ficheros.ordenarCsvPorId(rutaPrestamos, 1);
+                        }
                     }
-                } else if(seleccionMenu.equals("2")){
+                } else if (seleccionMenu.equals("2")) {
 
-                } else if(seleccionMenu.equals("3")){
+                } else if (seleccionMenu.equals("3")) {
 
-                } else if(seleccionMenu.equals("4")){
+                } else if (seleccionMenu.equals("4")) {
 
-                } else if(seleccionMenu.equals("5")) {
+                } else if (seleccionMenu.equals("5")) {
 
-                } else if(seleccionMenu.equals("6")){
+                } else if (seleccionMenu.equals("6")) {
 
-                } else if(seleccionMenu.equals("7")) {
+                } else if (seleccionMenu.equals("7")) {
 
                 } else {
                     MisUtiles.consoleLn("¡Hasta pronto!");
