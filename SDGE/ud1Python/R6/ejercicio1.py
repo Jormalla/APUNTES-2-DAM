@@ -20,7 +20,7 @@ cantidad_pedidos = utiles.pedir_numero_entero_no_negativo(MENSAJE_PETICION_CANTI
 for i in range(0, cantidad_pedidos):
     if len(str(i+1)) < 3:
         if len(str(i+1)) < 2:
-            print(f"{IDENTIFICADOR_PEDIDO}00{i+1}")
+            print(f"{IDENTIFICADOR_PEDIDO}00{i+1}") # Puedo usar el numero:03d
         else:
             print(f"{IDENTIFICADOR_PEDIDO}0{i+1}")
     else:

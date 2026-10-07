@@ -120,12 +120,12 @@ public class Ficheros {
             for (int i = 0; i < datos.size() - 1; i++) {
                 for (int j = 0; j < datos.size() - i - 1; j++) {
                     // Obtiene el ID numérico de la fila actual 
-                    String[] columnasActual = datos.get(j).split(",");
-                    int idActual = Integer.parseInt(columnasActual[columnaId].trim());
+                    String[] columnasActual = datos.get(j).split(";");
+                    int idActual = Integer.parseInt(columnasActual[columnaId - 1].trim());
 
                     // Obtiene el ID numérico de la siguiente fila
-                    String[] columnasSiguiente = datos.get(j + 1).split(",");
-                    int idSiguiente = Integer.parseInt(columnasSiguiente[columnaId].trim());
+                    String[] columnasSiguiente = datos.get(j + 1).split(";");
+                    int idSiguiente = Integer.parseInt(columnasSiguiente[columnaId - 1].trim());
 
                     // Compara las id, si es mayor la actual se cambian las posiciones
                     if (idActual > idSiguiente) {

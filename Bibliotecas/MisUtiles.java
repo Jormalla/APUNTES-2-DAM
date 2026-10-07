@@ -146,7 +146,7 @@ public class MisUtiles {
             if (numeroAComprobar < 0) {
                 consoleLn(mensajeError);
             }
-        } while (numeroAComprobar <= 0);
+        } while (numeroAComprobar < 0);
 
         return numeroAComprobar;
     }
