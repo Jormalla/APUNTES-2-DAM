@@ -18,8 +18,7 @@ public class Ejercicio5 {
         ArrayList<String> todosLosIds = new ArrayList<>();
         ArrayList<String> todosLosTitulos = new ArrayList<>();
         Path rutaBiblioteca = Path.of("AccesoDatos", "UD1", "R2", "biblioteca.csv");
-        boolean libroExiste = false;
-        boolean idExiste = false;
+        
 
         // MENSAJES
         final String MENSAJE_PETICION_ID = "Ingrese el id del libro: ",
@@ -37,24 +36,29 @@ public class Ejercicio5 {
 
                 // PETICIÓN DE DATOS
                 Scanner input = new Scanner(System.in);
+                boolean idExiste;
                 // PETICION ID
                 do {
+                    idExiste = false;
                     idLibro = MisUtiles.pideNumeroEnteroPositivo(MENSAJE_PETICION_ID, ERROR_NUMERO_ID, input);
                     // COMPRUEBA SI EXISTE LA ID
                     if (todosLosIds.contains(idLibro + "")) {
                         idExiste = true;
-                        MisUtiles.consoleLn("¡VAYA!, parece que la id" + idLibro + " ya existe en el documento.");
+                        MisUtiles.consoleLn("¡VAYA!, parece que la id " + idLibro + " ya existe en el documento.");
                     }
                 } while (idExiste);
 
                 // PETICIÓN DEL TÍTULO
+                boolean libroExiste = false;
                 do {
+                    libroExiste = false;
                     tituloLibro = MisUtiles.validarCadenaNoVacia(MENSAJE_PETICION_TITULO, ERROR_CAMPO_VACIO, input);
                     // COMPRUEBA SI EL LIBRO EXISTE
                     for (String titulo : todosLosTitulos) {
                         if (titulo.equalsIgnoreCase(tituloLibro.trim())) {
                             libroExiste = true;
                             MisUtiles.consoleLn("¡VAYA!, parece que " + tituloLibro + " ya existe en el documento.");
+                            break;
                         }
                     }
                 } while (libroExiste);
