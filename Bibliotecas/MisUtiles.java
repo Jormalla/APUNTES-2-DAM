@@ -126,6 +126,31 @@ public class MisUtiles {
         return numeroAComprobar;
     }
 
+    
+    /**
+     * MÉTODO NUMERO ENTERO NO NEGATIVO
+     * Este método permite hacer una petición de un número int y hará un control de
+     * errores que repetirá hasta que el número ingresado sea mayor o igual a 0.
+     * 
+     * @param mensajeInput Mensaje que le aparecerá al usuario para la petición.
+     * @param mensajeError Mensaje de error en caso de introducir incorrectamente
+     *                     los datos.
+     * @param scanner      Objeto de tipo scanner que registrará lo introducido por
+     *                     el usuario.
+     * @return Devuelve el número entero no negativo
+     */
+    public static int pideNumeroEnteroNoNegativo(String mensajeInput, String mensajeError, Scanner scanner) {
+        int numeroAComprobar;
+        do {
+            numeroAComprobar = pideNumeroEntero(mensajeInput, mensajeError, scanner);
+            if (numeroAComprobar < 0) {
+                consoleLn(mensajeError);
+            }
+        } while (numeroAComprobar <= 0);
+
+        return numeroAComprobar;
+    }
+
     /**
      * FUNCIÓN QUE COMPRUEBA SI UN NÚMERO DOUBLE ESTÁ EN UN RANGO NUMÉRICO
      * 
