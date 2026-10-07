@@ -90,9 +90,9 @@ public class Ejercicio8 {
                                 StandardOpenOption.APPEND)) {
                             salida.write(id + ";" + nombre + ";" + material);
                             salida.newLine();
-                            // Ordena el csv
-                            Ficheros.ordenarCsvPorId(rutaPrestamos, 1);
                         }
+                        // Ordena el csv
+                        Ficheros.ordenarCsvPorId(rutaPrestamos, 1);
                     }
                 } else if (seleccionMenu.equals("2")) {
 
