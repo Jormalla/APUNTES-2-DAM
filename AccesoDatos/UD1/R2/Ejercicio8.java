@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ public class Ejercicio8 {
     public static void main(String[] args) {
         // VARIABLES
         Path rutaPrestamos = Path.of("AccesoDatos", "UD1", "R2", "prestamos.csv");
+        Path rutaBackup = Path.of("AccesoDatos", "UD1", "R2", "prestamos.bak");
         Scanner input = new Scanner(System.in);
         final String CABECERA = "id;persona;material";
         boolean sigueEnMenu = true;
@@ -83,6 +85,8 @@ public class Ejercicio8 {
                         nombre = MisUtiles.validarCadenaNoVacia(PETICION_NOMBRE, ERROR_CAMPO_VACIO, input);
                         material = MisUtiles.validarCadenaNoVacia(PETICION_MATERIAL, ERROR_CAMPO_VACIO, input);
 
+                        // Hace una copia de seguridad previa
+                        Files.copy(rutaPrestamos, rutaBackup, StandardCopyOption.REPLACE_EXISTING);
                         // Añade el registro
                         try (BufferedWriter salida = Files.newBufferedWriter(
                                 rutaPrestamos, StandardCharsets.UTF_8,
