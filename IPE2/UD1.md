@@ -131,3 +131,40 @@ Los elementos que condicionan nuestra elección profesional son: situación pers
 Para la toma de decisiones es muy útil realizar un análisis DAFO (debilidades, amenazas fortalezas y oportunidades).
 
 Una herramienta complementaria al DAFO es el CAME (acrónimo de corregir, afrontar, mantener y explorar), con la que podemos optinmizar las conclusiones extraídas del DAFO.
+
+## 3. HERRAMIENTAS PARA MEJORAR LA EMPLEABILIDAD
+
+**A. Curriculum Vitae**
+Es el documento que recoge de forma ordenada los datos personales, la formación académica y la experiencia profesional de la persona candidata a un puesto de trabajo.
+Se debe poner especial atención en la preparación del currículum. Sobre todo, debe ser claro, atractivo y ordenado.
+
+**B. Carta de presentación**
+Es un escrito que acompaña al currículum y en el que una persona destaca sus cualidades y señala su disposición a trabajar en una empresa.
+
+Tiene como finalidad captar la atención del receptor al destacar los aspectos más relevantes del perfil profesional de quien la envia. Siempre debe acompañar al curriculum vitae.
+
+Este documento es como nuestra tarjeta de visita y, por lo tanto, deberá estar impecablemente redactado.
+
+Siempre va dirigida a una empresa concreta, que busca un perfil específico. Por ello, nunca se debe hacer una carta de presentación estándar para todas las empresas ni para todas las ofertas de trabajo.
+
+Además, disponer de una buena identidad digital, definir de forma acertada la marca personal, y desarrollar las competencias digitales que las empresas demandan aumentará la empleabilidad
+
+## 4. CÓMO DECIDEN LAS EMPRESAS A QUIÉN CONTRATAN
+Cuando la empresa necesita contratar a alguien para un puesto de trabajo inicia un proceso de selecció de personal.
+
+Para elegir a la persona ideal se utilizan diferentes instrumentos: pruebas, entrevistas, referencias, etc. El proceso de selección consta de las siguientes fases:
+
+- Análisis del puesto de trabajo;
+
+- Reclutamiento y preselección;
+
+- Reclutamiento interno;
+
+- Reclutamiento externo; selección.
+
+### 4.1. LA ENTREVISTA DE TRABAJO
+Normalmente, la entrevista de trabajo suele ser la fase decisiva de un proceso de selección, es decir, es el momento en el que la persona entrevistadora toma respecto a la contratación de la persona candidata.
+
+En la actualidad también se realizan entrevistas de trabajo en grupo.
+
+La entrevista de trabajo es una conversación entre la persona candidata y la persona entrevistadora. Tiene por objeto identificar a la persona adecuada para el puesto de trabajo ofertado.
