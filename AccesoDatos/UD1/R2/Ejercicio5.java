@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.ArrayList;
 import Bibliotecas.Ficheros;
 import Bibliotecas.MisUtiles;
 
@@ -21,7 +20,6 @@ public class Ejercicio5 {
         Path rutaBiblioteca = Path.of("AccesoDatos", "UD1", "R2", "biblioteca.csv");
         boolean libroExiste = false;
         boolean idExiste = false;
-        ArrayList<String> nuevas = new ArrayList<>();
 
         // MENSAJES
         final String MENSAJE_PETICION_ID = "Ingrese el id del libro: ",
