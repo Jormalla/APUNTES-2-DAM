@@ -1,5 +1,6 @@
 package AccesoDatos.UD1.R2;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -8,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import Bibliotecas.Ficheros;
@@ -26,6 +28,7 @@ public class Ejercicio8 {
         final ArrayList<String> OPCIONESMENU = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8"));
         int id;
         String nombre, material;
+        String columnas[];
 
         // MENSAJES
         final String MENSAJE_ERROR_MENU = "¡ERROR! Debes seleccionar una opción posible";
@@ -97,8 +100,17 @@ public class Ejercicio8 {
                         }
                         // Ordena el csv
                         Ficheros.ordenarCsvPorId(rutaPrestamos, 1);
+                        // Agrega el id a la lista de ids
+                        idsArchivo.add(id + "");
                     }
+                    // =================== OPCIÓN 2: LISTAR ======================= //
                 } else if (seleccionMenu.equals("2")) {
+                    List<String> contenidoArchivo = Files.readAllLines(rutaPrestamos, StandardCharsets.UTF_8);
+                    // Le deja la cabecera puesta para que el usuario se guie
+                    for (int i = 0; i < contenidoArchivo.size(); i++) {
+                        columnas = contenidoArchivo.get(i).split(";", -1);
+                        MisUtiles.consoleLn(columnas[i] + " --> " + columnas[i+1] + " | " + columnas[i+2]);
+                    }
 
                 } else if (seleccionMenu.equals("3")) {
 
