@@ -9,6 +9,20 @@ def pedir_cadena_no_vacia(mensaje_input, aviso_error):
   return cadena_a_comprobar
 
 # Valida si el input es un número y lo transforma a float
+def pedir_numero(mensaje_input, aviso_error, mensaje_fallo_en_numero):
+  while True:
+    # Valida que no esté vacio
+    numero_a_comprobar = pedir_cadena_no_vacia(mensaje_input, aviso_error)
+    
+    # Intenta convertir a float
+    try:
+      valor_numerico = float(numero_a_comprobar)
+      return valor_numerico  # Devuelve el número en float
+    except ValueError:
+      # Si float() falla
+      print(mensaje_fallo_en_numero)
+
+# Valida si el input es un número no negativo y lo transforma a float
 def pedir_numero_no_negativo(mensaje_input, aviso_error, mensaje_fallo_en_numero):
   while True:
     # Valida que no esté vacio
