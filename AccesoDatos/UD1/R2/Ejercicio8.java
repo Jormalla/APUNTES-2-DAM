@@ -124,14 +124,42 @@ public class Ejercicio8 {
                         boolean idEncontrada = false;
                         for (int i = 1; i < contenidoArchivo.size() && !idEncontrada; i++) {
                             columnas = contenidoArchivo.get(i).split(";", -1);
-                            if (columnas[0].equals(id+"")) {
+                            if (columnas[0].equals(id + "")) {
                                 MisUtiles.consoleLn(columnas[0] + " --> " + columnas[1] + " | " + columnas[2]);
                                 idEncontrada = true;
                             }
                         }
                     }
+                    // =================== OPCIÓN 4: CAMBIAR MATERIAL ======================= //
                 } else if (seleccionMenu.equals("4")) {
+                    // Petición del id
+                    id = MisUtiles.pideNumeroEnteroNoNegativo(PETICION_ID, ERROR_NUMERO_NEGATIVO, input);
+                    // No encuentra el préstamo
+                    if (!idsArchivo.contains(id + "")) {
+                        MisUtiles.consoleLn("¡VAYA! Parece que no hay registrado ningún préstamo con el id " + id);
+                        // Encuentra el préstamo y lo muestra
+                    } else {
+                        // Hace una copia de seguridad previa
+                        Files.copy(rutaPrestamos, rutaBackup, StandardCopyOption.REPLACE_EXISTING);
 
+                        material = MisUtiles.validarCadenaNoVacia(PETICION_MATERIAL, ERROR_CAMPO_VACIO, input);
+
+                        // Recorre el archivo, reescribe el archivo, con el cambio de material
+                        ArrayList<String> nuevas = new ArrayList<>();
+                        List<String> contenidoArchivo = Files.readAllLines(rutaPrestamos, StandardCharsets.UTF_8);
+                        for (int i = 0; i < contenidoArchivo.size(); i++) {
+                            columnas = contenidoArchivo.get(i).split(";", -1);
+                            if (columnas[0].equals(id + "")) {
+                                columnas[2] = material;
+                                nuevas.add(String.join(";", columnas));
+                            } else {
+                                nuevas.add(contenidoArchivo.get(i));
+                            }
+                        }
+                        // Reescribe el archivo original
+                        Files.write(rutaPrestamos, nuevas, StandardCharsets.UTF_8);
+                        MisUtiles.consoleLn("Prestamo del id " + id + " cambiado a " + material);
+                    }
                 } else if (seleccionMenu.equals("5")) {
 
                 } else if (seleccionMenu.equals("6")) {
