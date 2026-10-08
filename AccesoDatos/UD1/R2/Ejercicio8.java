@@ -110,10 +110,26 @@ public class Ejercicio8 {
                         columnas = contenidoArchivo.get(i).split(";", -1);
                         MisUtiles.consoleLn(columnas[0] + " --> " + columnas[1] + " | " + columnas[2]);
                     }
-                    
+
                     // =================== OPCIÓN 3: BUSCAR POR ID ======================= //
                 } else if (seleccionMenu.equals("3")) {
-
+                    // Petición del id
+                    id = MisUtiles.pideNumeroEnteroNoNegativo(PETICION_ID, ERROR_NUMERO_NEGATIVO, input);
+                    // No encuentra el préstamo
+                    if (!idsArchivo.contains(id + "")) {
+                        MisUtiles.consoleLn("¡VAYA! Parece que no hay registrado ningún préstamo con el id " + id);
+                        // Encuentra el préstamo y lo muestra
+                    } else {
+                        List<String> contenidoArchivo = Files.readAllLines(rutaPrestamos, StandardCharsets.UTF_8);
+                        boolean idEncontrada = false;
+                        for (int i = 1; i < contenidoArchivo.size() && !idEncontrada; i++) {
+                            columnas = contenidoArchivo.get(i).split(";", -1);
+                            if (columnas[0].equals(id+"")) {
+                                MisUtiles.consoleLn(columnas[0] + " --> " + columnas[1] + " | " + columnas[2]);
+                                idEncontrada = true;
+                            }
+                        }
+                    }
                 } else if (seleccionMenu.equals("4")) {
 
                 } else if (seleccionMenu.equals("5")) {
