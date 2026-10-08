@@ -1,6 +1,5 @@
 package AccesoDatos.UD1.R2;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -106,10 +105,10 @@ public class Ejercicio8 {
                     // =================== OPCIÓN 2: LISTAR ======================= //
                 } else if (seleccionMenu.equals("2")) {
                     List<String> contenidoArchivo = Files.readAllLines(rutaPrestamos, StandardCharsets.UTF_8);
-                    // Le deja la cabecera puesta para que el usuario se guie
-                    for (int i = 0; i < contenidoArchivo.size(); i++) {
+                    // Le quita la cabecera y muestra el contenido
+                    for (int i = 1; i < contenidoArchivo.size(); i++) {
                         columnas = contenidoArchivo.get(i).split(";", -1);
-                        MisUtiles.consoleLn(columnas[i] + " --> " + columnas[i+1] + " | " + columnas[i+2]);
+                        MisUtiles.consoleLn(columnas[0] + " --> " + columnas[1] + " | " + columnas[2]);
                     }
 
                 } else if (seleccionMenu.equals("3")) {
