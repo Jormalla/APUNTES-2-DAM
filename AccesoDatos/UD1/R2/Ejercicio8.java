@@ -160,11 +160,35 @@ public class Ejercicio8 {
                         Files.write(rutaPrestamos, nuevas, StandardCharsets.UTF_8);
                         MisUtiles.consoleLn("Prestamo del id " + id + " cambiado a " + material);
                     }
-                    // =================== OPCIÓN 5: CREAR COPIA ======================= //
+                    // =================== OPCIÓN 5: DAR DE BAJA ======================= //
                 } else if (seleccionMenu.equals("5")) {
+                   // Petición del id
+                    id = MisUtiles.pideNumeroEnteroNoNegativo(PETICION_ID, ERROR_NUMERO_NEGATIVO, input);
+                    // No encuentra el préstamo
+                    if (!idsArchivo.contains(id + "")) {
+                        MisUtiles.consoleLn("¡VAYA! Parece que no hay registrado ningún préstamo con el id " + id);
+                        // Encuentra el préstamo y lo muestra
+                    } else {
+                        // Hace una copia de seguridad previa
+                        Files.copy(rutaPrestamos, rutaBackup, StandardCopyOption.REPLACE_EXISTING);
 
+                        // Recorre el archivo, reescribe el archivo, eliminando la fila buscada
+                        ArrayList<String> nuevas = new ArrayList<>();
+                        List<String> contenidoArchivo = Files.readAllLines(rutaPrestamos, StandardCharsets.UTF_8);
+                        for (int i = 0; i < contenidoArchivo.size(); i++) {
+                            columnas = contenidoArchivo.get(i).split(";", -1);
+                            if (!columnas[0].equals(id + "")) {
+                                nuevas.add(contenidoArchivo.get(i));
+                            } 
+                        }
+                        // Reescribe el archivo original
+                        Files.write(rutaPrestamos, nuevas, StandardCharsets.UTF_8);
+                        MisUtiles.consoleLn("Prestamo del id " + id + " eliminado");
+                    }   
+                    // =================== OPCIÓN 6: CREAR COPIA ======================= //
                 } else if (seleccionMenu.equals("6")) {
-
+                    Files.copy(rutaPrestamos, rutaBackup, StandardCopyOption.REPLACE_EXISTING);
+                    MisUtiles.consoleLn("Copia realizada con éxito.");
                 } else if (seleccionMenu.equals("7")) {
 
                 } else {
