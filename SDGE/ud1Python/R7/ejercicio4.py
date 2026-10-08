@@ -1,6 +1,7 @@
-def mostrarClavesDiccionario(diccionario):
-    for clave, contenido in diccionario.items():
-        print(f"{clave.capitalize()}: {contenido}")
+import sys
+sys.path.append("C:/Users/DAM/Desktop/Github/APUNTES-2-DAM/Bibliotecas")
+
+import utiles
 
 manzana = {
   "nombre": "manzana",
@@ -34,6 +35,6 @@ productos = [manzana, mopa, xbox, tv]
 
 for producto in productos:
   if producto["stock"] > 0:
-    mostrarClavesDiccionario(producto)
+    utiles.mostrarClavesDiccionario(producto)
     print("\n")
     
