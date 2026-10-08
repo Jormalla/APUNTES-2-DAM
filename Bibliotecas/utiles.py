@@ -88,3 +88,7 @@ def pedir_telefono(mensaje_input, aviso_error, aviso_error_longitud_no_numero):
       break
   return telefono_a_comprobar
 
+# Método para mostrar por pantalla el contenido de un diccionario
+def mostrarClavesDiccionario(diccionario):
+    for clave, contenido in diccionario.items():
+        print(f"{clave.capitalize()}: {contenido}")
