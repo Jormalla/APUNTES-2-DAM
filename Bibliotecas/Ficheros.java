@@ -99,7 +99,7 @@ public class Ficheros {
      * @throws IOException Lanza una excepción si no se tiene permisos en el archivo
      * @throws NumberFormatException Lanza un error si ubica una id como un no número
      */
-    public static void ordenarCsvPorId(Path rutaCsv, int columnaId) {
+    public static void ordenarCsvPorId(Path rutaCsv, int numeroColumna) {
         try {
             //Lee todas las líneas del archivo
             List<String> lineas = Files.readAllLines(rutaCsv);
@@ -121,11 +121,11 @@ public class Ficheros {
                 for (int j = 0; j < datos.size() - i - 1; j++) {
                     // Obtiene el ID numérico de la fila actual 
                     String[] columnasActual = datos.get(j).split(";");
-                    int idActual = Integer.parseInt(columnasActual[columnaId - 1].trim());
+                    int idActual = Integer.parseInt(columnasActual[numeroColumna - 1].trim());
 
                     // Obtiene el ID numérico de la siguiente fila
                     String[] columnasSiguiente = datos.get(j + 1).split(";");
-                    int idSiguiente = Integer.parseInt(columnasSiguiente[columnaId - 1].trim());
+                    int idSiguiente = Integer.parseInt(columnasSiguiente[numeroColumna - 1].trim());
 
                     // Compara las id, si es mayor la actual se cambian las posiciones
                     if (idActual > idSiguiente) {
