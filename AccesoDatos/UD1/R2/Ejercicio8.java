@@ -189,10 +189,22 @@ public class Ejercicio8 {
                 } else if (seleccionMenu.equals("6")) {
                     Files.copy(rutaPrestamos, rutaBackup, StandardCopyOption.REPLACE_EXISTING);
                     MisUtiles.consoleLn("Copia realizada con éxito.");
+                    // =================== OPCIÓN 7: RESTAURAR COPIA ======================= //
                 } else if (seleccionMenu.equals("7")) {
+                    // Recorre el archivo bak, reescribe el archivo utilizando la información del backup
+                        ArrayList<String> nuevas = new ArrayList<>();
+                        List<String> contenidoArchivo = Files.readAllLines(rutaBackup, StandardCharsets.UTF_8);
+                        for (int i = 0; i < contenidoArchivo.size(); i++) {
+                            columnas = contenidoArchivo.get(i).split(";", -1);
+                                nuevas.add(contenidoArchivo.get(i));
+                        }
+                        Files.write(rutaPrestamos, nuevas, StandardCharsets.UTF_8);
+                        MisUtiles.consoleLn("Archivo restaurado con ÉXITO");
 
+                    // =================== OPCIÓN 8: SALIR ======================= /
                 } else {
                     MisUtiles.consoleLn("¡Hasta pronto!");
+                    sigueEnMenu = false;
                 }
             }
 
