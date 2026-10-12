@@ -103,6 +103,29 @@ def pedir_telefono(mensaje_input, aviso_error, aviso_error_longitud_no_numero):
   return telefono_a_comprobar
 
 # Método para mostrar por pantalla el contenido de un diccionario
-def mostrarClavesDiccionario(diccionario):
+def mostrar_claves_diccionario(diccionario):
     for clave, contenido in diccionario.items():
         print(f"{clave.capitalize()}: {contenido}")
+
+# MÉTODO PARA PREGUNTAR SÍ O NO
+def confirmar_accion(mensaje):
+    MENSAJE_ERROR_SI_NO = "¡ERROR! Responde 's' o 'n'."
+    resultado = None
+    sigue_preguntando = True
+    while sigue_preguntando:
+        respuesta = input(mensaje).strip().lower()
+        # Confirma
+        if respuesta in ("s", "si", "sí"):
+            resultado = True
+            sigue_preguntando = False 
+        # Cancela
+        elif respuesta in ("n", "no"):
+            resultado = False
+            sigue_preguntando = False
+        # No es una opción correcta
+        else:
+            print(MENSAJE_ERROR_SI_NO)
+
+    return resultado 
+
+
