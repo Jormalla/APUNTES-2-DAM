@@ -3,7 +3,7 @@ class Empleado:
         self.nombre = nombre
         self.salario = salario   
     def __str__(self):
-        return f"======= {self.nombre.upper()} =======\nSALARIO: {self.salario}€"
+        return f"======= {self.nombre.upper()} =======\nSALARIO: {self.salario:.2f}€"
     
 class Comercial(Empleado):
     def __init__(self, nombre, salario, ventas):
@@ -12,4 +12,8 @@ class Comercial(Empleado):
     def calcular_bonus(self):
         return 0.5 * self.ventas
     def __str__(self):
-        return super().__str__() + f"BONUS: {self.calcular_bonus()}€"
+        return super().__str__() + f"| BONUS: {self.calcular_bonus():.2f}€"
+
+comercial = Comercial("Juan", 2000.00, 350.20)
+
+print(comercial)
