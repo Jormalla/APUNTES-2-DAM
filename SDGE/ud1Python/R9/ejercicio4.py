@@ -15,7 +15,7 @@ import ficheros
 import utiles
 
 # TITULOS DE LAS COLUMNAS DEL CSV
-CAMPOS = ["nombre", "precio", "stock"]  # títulos de la cabecera
+COLUMNAS = ["nombre", "precio", "stock"]  # títulos de la cabecera
 
 
 # MENSAJES
@@ -62,7 +62,7 @@ if not ARCHIVO.is_file():
 else:
     print(MENSAJE_ARCHIVO_EXISTENTE)
 
-escribir_cabecera = ficheros.is_vacio(ARCHIVO)
+escribir_cabecera = ficheros.esta_vacio(ARCHIVO)
 
 # PETICIONES
 productos = []
@@ -87,7 +87,7 @@ for i in range(1, numero_productos + 1):
 # ESCRITURA
 try:
     with open(ARCHIVO, "a", encoding="utf-8", newline="") as archivo:
-        escritor_csv = csv.DictWriter(archivo, fieldnames=CAMPOS, delimiter=";")
+        escritor_csv = csv.DictWriter(archivo, fieldnames=COLUMNAS, delimiter=";")
         if escribir_cabecera:
             escritor_csv.writeheader()
         escritor_csv.writerows(productos)
@@ -112,9 +112,9 @@ try:
             nombre = fila['nombre']
             # Si el nombre mide más de 24 caracteres, se recorta y se le añaden ... 
             if len(nombre) > 24:
-                nombre = nombre[:21] + "..."
+                nombre = nombre[:20] + "..."
                 
-            print(f"{nombre:<24}{fila['precio']:<10}{fila['stock']:<10}")
+            print(f"{nombre:<24}{f'{fila['precio']}€':<10}{fila['stock']:<10}")
 except PermissionError:
     print(f"{MENSAJE_ERROR_PERMISOS} para mostrar el csv")
 
