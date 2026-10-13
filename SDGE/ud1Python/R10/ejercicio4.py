@@ -10,7 +10,7 @@ class Comercial(Empleado):
         super().__init__(nombre, salario)
         self.ventas = ventas
     def calcular_bonus(self):
-        return 0.5 * self.ventas
+        return 0.05 * self.ventas
     def __str__(self):
         return super().__str__() + f"| BONUS: {self.calcular_bonus():.2f}€"
 
