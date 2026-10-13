@@ -9,13 +9,13 @@ class Producto:
         self.precio = precio
         self.stock = stock
 
-    def mostrar(self):
+    def __str__(self):
         mensaje_mostrar = f"======= {self.nombre.upper()} =======\nPRECIO: {self.precio}€ | STOCK: {self.stock}"
         return mensaje_mostrar
 
     def vender(self, cantidad):
         se_pudo = False
-        if self.stock - cantidad >= 0:
+        if self.stock >= cantidad:
             se_pudo = True
             self.stock -= cantidad
         return se_pudo
@@ -28,11 +28,11 @@ teclado = Producto("Teclado Logitech", 30, 120)
 pc_gaming.vender(30)
 teclado.vender(121)
 
-print(pc_gaming.mostrar())
-print(teclado.mostrar())
+print(pc_gaming)
+print(teclado)
 
 pc_gaming.reponer(60)
 teclado.reponer(200)
 
-print(pc_gaming.mostrar())
-print(teclado.mostrar())
+print(pc_gaming)
+print(teclado)
