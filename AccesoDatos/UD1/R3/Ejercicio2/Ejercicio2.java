@@ -51,7 +51,7 @@ public class Ejercicio2 {
 
             MisUtiles.consoleLn("Productos guardados en " + rutaProductos);
         } catch (IOException e) {
-            System.err.println("Error al guardar: " + e.getMessage());
+            MisUtiles.error("Error al guardar: " + e.getMessage());
         }
 
         // MUESTRA PRODUCTOS, GUARDA LOS PRODUCTOS Y GUARDA LAS IDS
@@ -76,7 +76,7 @@ public class Ejercicio2 {
                 productos.add(producto);
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("No se pudo recuperar: " + e.getMessage());
+            MisUtiles.error("No se pudo recuperar: " + e.getMessage());
         }
 
         // MODIFICAR PRODUCTO
@@ -110,7 +110,7 @@ public class Ejercicio2 {
 
             MisUtiles.consoleLn("Stock del producto modificado");
         } catch (IOException e) {
-            System.err.println("Error al guardar: " + e.getMessage());
+            MisUtiles.error("Error al guardar: " + e.getMessage());
         }
 
         // MUESTRA EL .DAT
@@ -130,7 +130,7 @@ public class Ejercicio2 {
                 MisUtiles.consoleLn(producto + "");
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("No se pudo recuperar: " + e.getMessage());
+            MisUtiles.error("No se pudo recuperar: " + e.getMessage());
         }
         input.close();
     }

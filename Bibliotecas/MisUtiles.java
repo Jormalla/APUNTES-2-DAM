@@ -23,6 +23,14 @@ public class MisUtiles {
     }
 
     /**
+     * MÉTODO PARA IMPRIMIR POR LA CONSOLA DE ERROR UN MENSAJE DE ERROR
+     * @param mensajeError Mensaje de error que se va a mostrar
+     */
+    public static void error(String mensajeError){
+        System.err.println(mensajeError);
+    }
+
+    /**
      * FUNCIÓN PARA PEDIR UN NÚMERO ENTERO Y COMPROBAR QUE LO INTRODUCIDO SEA UN
      * NÚMERO ENTERO
      * 
