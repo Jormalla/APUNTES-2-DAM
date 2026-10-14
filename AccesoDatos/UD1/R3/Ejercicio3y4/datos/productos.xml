@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<productos>
+    <producto id="1">
+        <nombre>PC MSI</nombre>
+        <precio>10</precio>
+        <stock/>
+    </producto>
+    <producto id="2">
+        <nombre>Ratón logitech</nombre>
+        <precio>130</precio>
+        <stock/>
+    </producto>
+    <producto id="3">
+        <nombre>Monitor DELL</nombre>
+        <precio>100</precio>
+        <stock/>
+    </producto>
+</productos>
