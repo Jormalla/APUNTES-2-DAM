@@ -79,6 +79,39 @@ public class MisUtiles {
     }
 
     /**
+     * FUNCIÓN PARA PEDIR UN NÚMERO DOUBLE POSITIVO Y COMPROBAR QUE LO INTRODUCIDO SEA UN
+     * NÚMERO DOUBLE
+     * 
+     * @param mensajeInput Mensaje de petición
+     * @param mensajeError Mensaje que se lanza en caso de que no haya introducido
+     *                     correctamente lo que se pide
+     * @param scanner      Objeto scanner para leer lo introducido
+     * @return Devuelve el número double ingresado.
+     */
+    public static double pideNumeroDoubleNoNegativo(String mensajeInput,
+            String mensajeError, Scanner scanner) {
+        boolean noEsDoublePositivo = true;
+        double numeroDouble = 0;
+        do {
+            try {
+                noEsDoublePositivo = false;
+                console(mensajeInput);
+                numeroDouble = Double.parseDouble(scanner.nextLine());
+
+                // Es negativo
+                if (numeroDouble < 0) {
+                    noEsDoublePositivo = true;
+                }
+
+            } catch (Exception e) {
+                noEsDoublePositivo = true;
+                consoleLn(mensajeError);
+            }
+        } while (noEsDoublePositivo);
+        return numeroDouble;
+    }
+
+    /**
      * FUNCIÓN QUE COMPRUEBA SI UN NÚMERO ENTERO ESTÁ EN UN RANGO NUMÉRICO
      * 
      * @param valorMinimo  Valor mínimo que debe tener el número entero
@@ -126,7 +159,6 @@ public class MisUtiles {
         return numeroAComprobar;
     }
 
-    
     /**
      * MÉTODO NUMERO ENTERO NO NEGATIVO
      * Este método permite hacer una petición de un número int y hará un control de
