@@ -72,11 +72,10 @@ def listar_productos():
                 nombre = fila['nombre']
                 # Si el nombre mide más de 24 caracteres, se recorta y se le añaden ... 
                 if len(nombre) > 24:
-                    nombre = nombre[:20] + "..."
+                    nombre = name[:20] + "..."
                 
                 visualizacion_productos += f"\n{nombre:<24}{f'{fila['precio']}€':<10}{fila['stock']:<10}"
             
-            # CORREGIDO: El return se sacó del bucle 'for' para devolver todo el texto acumulado
             return visualizacion_productos
     except PermissionError:
         consola(f"{MENSAJE_ERROR_PERMISOS} para mostrar el csv")
@@ -100,7 +99,7 @@ def contolar_nombre_producto():
     if not no_tiene_contenido():
         if buscar_producto(nombre_producto) is not None:
             consola(f"¡VAYA! Parece que ya existe el producto")
-            sys.exit()
+            return None  # MODIFICADO: Retorna None en vez de forzar sys.exit()
         else:
             return nombre_producto
     else:
@@ -108,8 +107,12 @@ def contolar_nombre_producto():
 
 # MÉTODO PARA CREAR UN PRODUCTO
 def crear_producto():
+     nombre = contolar_nombre_producto()
+     if nombre is None:
+         return None  # MODIFICADO: Cancela el diccionario si el producto está repetido
+     
      producto_a_crear = {
-         "nombre": contolar_nombre_producto(),
+         "nombre": nombre,
          "precio": utiles.pedir_numero_no_negativo(PETICION_PRECIO, MENSAJE_ERROR, MENSAJE_ERROR_NUMERO_DOUBLE),
          "stock": utiles.pedir_numero_entero_no_negativo(PETICION_STOCK, MENSAJE_ERROR, MENSAJE_ERROR_NUMERO_ENTERO)
         }
@@ -138,11 +141,9 @@ def buscar_producto(nombre_producto):
 def modificar_stock(nombre_producto, nuevo_stock):
     se_pudo_modificar = False
     producto_a_cambiar = buscar_producto(nombre_producto)
-    # Existe el producto - Lo modifica - Reescribe el archivo
     if producto_a_cambiar != None:
         productos_modificados = []
         producto_a_cambiar['stock'] = nuevo_stock
-        # Lee el csv - guarda el producto en productos_modificados
         try:
             with open(RUTA_ARCHIVO, mode='r', encoding='utf-8') as archivo:
                 lector_csv = csv.DictReader(archivo, delimiter=";")
@@ -159,7 +160,6 @@ def modificar_stock(nombre_producto, nuevo_stock):
         except PermissionError as error_lectura:
             consola(f"{MENSAJE_ERROR_PERMISOS} {error_lectura}")
             sys.exit()
-        # REESCRIBE EL DOCUMENTO
         try:
             with open(RUTA_ARCHIVO, "w", encoding="utf-8", newline="") as archivo:
                 escritor_csv = csv.DictWriter(archivo, fieldnames=COLUMNAS, delimiter=";")
@@ -191,7 +191,11 @@ def main():
                 consola(f"¡VAYA! Aun no hay productos en el archivo")
         # Añade un nuevo producto
         elif opcion_elegida == 2:
-            aniadir_producto(crear_producto())
+            producto_nuevo = crear_producto()
+            if producto_nuevo is not None: 
+                aniadir_producto(producto_nuevo)
+            else:
+                consola("Regresando al menú principal...")
         # Modifica el stock del producto
         elif opcion_elegida == 3:
             if modificar_stock(utiles.pedir_cadena_no_vacia(PETICION_NOMBRE, MENSAJE_ERROR).strip(), utiles.pedir_numero_entero_no_negativo(PETICION_STOCK, MENSAJE_ERROR, MENSAJE_ERROR_NUMERO_ENTERO)):
