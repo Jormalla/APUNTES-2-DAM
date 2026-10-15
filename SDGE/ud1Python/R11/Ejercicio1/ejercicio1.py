@@ -27,6 +27,8 @@ MENSAJE_SALIDA = "Programa finalizado, no se ha creado nada."
 MENSAJE_ARCHIVO_NUEVO = "Archivo creado correctamente."
 MENSAJE_ARCHIVO_EXISTENTE = "El archivo ya existe, se añadirán los productos al final."
 MENSAJE_ERROR_PERMISOS = "¡ERROR! No tienes los permisos suficientes."
+INTERFAZ_MENU = "===== MENU =====\n1) Listar productos\n2) Añadir producto\n3) Modificar stock\n4) Buscar por nombre\n0) Salir\nIngrese una opción: "
+ERROR_INTERFAZ = "¡ERROR! Debes ingresar una opción válida."
 
 # TITULOS DE LAS COLUMNAS DEL CSV
 COLUMNAS = ["nombre", "precio", "stock"]  # títulos de la cabecera
@@ -62,8 +64,8 @@ def listar_productos():
             lector_csv = csv.DictReader(archivo_lectura, delimiter=";")
         
             # Muestra la cabecera formateada
-            visualizacion_productos += f"{'NOMBRE':<24}{'PRECIO':<10}{'STOCK':<10}"
-            visualizacion_productos += "-" * 44
+            visualizacion_productos += f"\n{'NOMBRE':<24}{'PRECIO':<10}{'STOCK':<10}"
+            visualizacion_productos += "\n" + "-" * 44
     
             # Muestra cada fila alineada con la cabecera
             for fila in lector_csv:
@@ -72,19 +74,142 @@ def listar_productos():
                 if len(nombre) > 24:
                     nombre = nombre[:20] + "..."
                 
-                visualizacion_productos += f"{nombre:<24}{f'{fila['precio']}€':<10}{fila['stock']:<10}"
-                return visualizacion_productos
+                visualizacion_productos += f"\n{nombre:<24}{f'{fila['precio']}€':<10}{fila['stock']:<10}"
+            
+            # CORREGIDO: El return se sacó del bucle 'for' para devolver todo el texto acumulado
+            return visualizacion_productos
     except PermissionError:
         consola(f"{MENSAJE_ERROR_PERMISOS} para mostrar el csv")
 
+# METODO PARA AÑADIR PRODUCTOS
 def aniadir_producto(producto_a_aniadir):
     try:
         with open(RUTA_ARCHIVO, "a", encoding="utf-8", newline="") as archivo:
             escritor_csv = csv.DictWriter(archivo, fieldnames=COLUMNAS, delimiter=";")
             if no_tiene_contenido():
                 escritor_csv.writeheader()
-            escritor_csv.writerows(producto_a_aniadir)
+            escritor_csv.writerow(producto_a_aniadir)
             consola(f"{producto_a_aniadir}  guardado en: {RUTA_ARCHIVO}")
     except PermissionError as error_escritura:
         consola(f"{MENSAJE_ERROR_PERMISOS} {error_escritura}")
         sys.exit()
+
+# COMPROBAR EL NOMBRE DEL PRODUCTO
+def contolar_nombre_producto():
+    nombre_producto = utiles.pedir_cadena_no_vacia(PETICION_NOMBRE, MENSAJE_ERROR).strip()
+    if not no_tiene_contenido():
+        if buscar_producto(nombre_producto) is not None:
+            consola(f"¡VAYA! Parece que ya existe el producto")
+            sys.exit()
+        else:
+            return nombre_producto
+    else:
+        return nombre_producto
+
+# MÉTODO PARA CREAR UN PRODUCTO
+def crear_producto():
+     producto_a_crear = {
+         "nombre": contolar_nombre_producto(),
+         "precio": utiles.pedir_numero_no_negativo(PETICION_PRECIO, MENSAJE_ERROR, MENSAJE_ERROR_NUMERO_DOUBLE),
+         "stock": utiles.pedir_numero_entero_no_negativo(PETICION_STOCK, MENSAJE_ERROR, MENSAJE_ERROR_NUMERO_ENTERO)
+        }
+     return producto_a_crear
+
+# BUSCAR PRODUCTO POR NOMBRE - DEVUELVE UN DICCIONARIO CON EL PRODUCTO
+def buscar_producto(nombre_producto):
+    producto_encontrado = None
+    try:
+        with open(RUTA_ARCHIVO, mode='r', encoding='utf-8') as archivo:
+            lector_csv = csv.DictReader(archivo, delimiter=";")
+            for fila in lector_csv:
+                if nombre_producto.upper() == fila['nombre'].upper():
+                    diccionario_producto = {
+                        "nombre": fila['nombre'],
+                        "precio": fila['precio'],
+                        "stock": fila['stock']
+                        }
+                    producto_encontrado =  diccionario_producto
+        return producto_encontrado
+    except PermissionError as error_lectura:
+        consola(f"{MENSAJE_ERROR_PERMISOS} {error_lectura}")
+        sys.exit()
+
+# COMPROBAR SI EL NOMBRE DEL PRODUCTO EXISTE - DEVUELVE TRUE SI SE PUDO - FALSE SI NO
+def modificar_stock(nombre_producto, nuevo_stock):
+    se_pudo_modificar = False
+    producto_a_cambiar = buscar_producto(nombre_producto)
+    # Existe el producto - Lo modifica - Reescribe el archivo
+    if producto_a_cambiar != None:
+        productos_modificados = []
+        producto_a_cambiar['stock'] = nuevo_stock
+        # Lee el csv - guarda el producto en productos_modificados
+        try:
+            with open(RUTA_ARCHIVO, mode='r', encoding='utf-8') as archivo:
+                lector_csv = csv.DictReader(archivo, delimiter=";")
+                for fila in lector_csv:
+                    if nombre_producto.upper() == fila['nombre'].upper():
+                        productos_modificados.append(producto_a_cambiar)
+                    else:
+                        producto_que_existia = {
+                            "nombre": fila['nombre'],
+                            "precio": fila['precio'],
+                            "stock": fila['stock']
+                            }
+                        productos_modificados.append(producto_que_existia)
+        except PermissionError as error_lectura:
+            consola(f"{MENSAJE_ERROR_PERMISOS} {error_lectura}")
+            sys.exit()
+        # REESCRIBE EL DOCUMENTO
+        try:
+            with open(RUTA_ARCHIVO, "w", encoding="utf-8", newline="") as archivo:
+                escritor_csv = csv.DictWriter(archivo, fieldnames=COLUMNAS, delimiter=";")
+                escritor_csv.writeheader()
+                escritor_csv.writerows(productos_modificados)
+        except PermissionError as error_escritura:
+            consola(f"{MENSAJE_ERROR_PERMISOS} {error_escritura}")
+            sys.exit()
+        se_pudo_modificar = True
+    return se_pudo_modificar
+
+# Devuelve una cadena con los datos del producto
+def mostrar_producto(producto):
+    return f"{producto['nombre']} | {producto['precio']} € | {producto['stock']} unidades"
+
+# ================ MAIN ===============
+def main():
+    comprobar_existencia_archivo()
+    opcion_elegida = ""
+    while opcion_elegida != 0:
+
+        opcion_elegida = utiles.pedir_numero_en_rango(0, 4, INTERFAZ_MENU, MENSAJE_ERROR, ERROR_INTERFAZ)
+
+        # Lista los productos
+        if opcion_elegida == 1:
+            if not no_tiene_contenido():
+                consola(listar_productos())
+            else:
+                consola(f"¡VAYA! Aun no hay productos en el archivo")
+        # Añade un nuevo producto
+        elif opcion_elegida == 2:
+            aniadir_producto(crear_producto())
+        # Modifica el stock del producto
+        elif opcion_elegida == 3:
+            if modificar_stock(utiles.pedir_cadena_no_vacia(PETICION_NOMBRE, MENSAJE_ERROR).strip(), utiles.pedir_numero_entero_no_negativo(PETICION_STOCK, MENSAJE_ERROR, MENSAJE_ERROR_NUMERO_ENTERO)):
+                consola(f"Producto modificado.")
+            else:
+                consola("El producto no existe. No se pudo modificar")
+        # Muestra un producto
+        elif opcion_elegida == 4:
+            if not no_tiene_contenido():
+                producto_buscado = buscar_producto(utiles.pedir_cadena_no_vacia(PETICION_NOMBRE, MENSAJE_ERROR).strip())
+                if producto_buscado is not None:
+                    consola(mostrar_producto(producto_buscado))
+                else:
+                    consola("El producto no existe.")
+            else:
+                consola(f"¡VAYA! Aun no hay productos en el archivo")
+        else:
+            consola("ADIOS")
+
+if __name__ == "__main__":
+    main()
