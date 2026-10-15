@@ -54,10 +54,3 @@ class Producto:
     # TOSTRING
     def __str__(self):
         return f"[{self.get_id()}] --> {self.get_nombre()} | {self.get_precio():.2f} € | {self.get_stock()} unidades"
-
-
-tv = Producto("Tv", 400.50, 30)
-raton = Producto("Ratón", 800.50, 10)
-
-print(tv)
-print(raton)
