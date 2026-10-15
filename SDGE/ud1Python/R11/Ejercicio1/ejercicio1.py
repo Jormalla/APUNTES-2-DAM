@@ -1,3 +1,5 @@
+import utiles
+import ficheros
 import csv
 import sys
 from pathlib import Path
@@ -9,8 +11,6 @@ RUTA_ARCHIVO = CARPETA_SCRIPT / NOMBRE_ARCHIVO
 
 sys.path.append(str(CARPETA_SCRIPT.parents[3] / "Bibliotecas"))
 
-import ficheros
-import utiles
 
 # MENSAJES
 PETICION_NUMERO_PRODUCTOS = "Ingrese el número de productos que desea escribir: "
@@ -34,10 +34,14 @@ ERROR_INTERFAZ = "¡ERROR! Debes ingresar una opción válida."
 COLUMNAS = ["nombre", "precio", "stock"]  # títulos de la cabecera
 
 # MOSTRAR POR PANTALLA
+
+
 def consola(mensaje):
     print(mensaje)
 
 # COMPRUEBA ARCHIVO - LO CREA
+
+
 def comprobar_existencia_archivo():
     if not RUTA_ARCHIVO.is_file():
         if not utiles.confirmar_accion(PETICION_CREAR_ARCHIVO):
@@ -53,38 +57,46 @@ def comprobar_existencia_archivo():
         consola(MENSAJE_ARCHIVO_EXISTENTE)
 
 # COMPRUEBA SI EL ARCHIVO TIENE CONTENIDO MIRANDO EL TAMAÑO DE SUS BYTES
+
+
 def no_tiene_contenido():
     return ficheros.esta_vacio(RUTA_ARCHIVO)
 
 # MÉTODO PARA LISTAR LOS PRODUCTOS
+
+
 def listar_productos():
     visualizacion_productos = "\n======= CONTENIDO DEL ARCHIVO CSV ======="
     try:
         with open(RUTA_ARCHIVO, "r", encoding="utf-8") as archivo_lectura:
             lector_csv = csv.DictReader(archivo_lectura, delimiter=";")
-        
+
             # Muestra la cabecera formateada
             visualizacion_productos += f"\n{'NOMBRE':<24}{'PRECIO':<10}{'STOCK':<10}"
             visualizacion_productos += "\n" + "-" * 44
-    
+
             # Muestra cada fila alineada con la cabecera
             for fila in lector_csv:
                 nombre = fila['nombre']
-                # Si el nombre mide más de 24 caracteres, se recorta y se le añaden ... 
+                # Si el nombre mide más de 24 caracteres, se recorta y se le añaden ...
                 if len(nombre) > 24:
                     nombre = name[:20] + "..."
-                
-                visualizacion_productos += f"\n{nombre:<24}{f'{fila['precio']}€':<10}{fila['stock']:<10}"
-            
+
+                visualizacion_productos += f"\n{nombre:<24}{f'{fila['precio']}€':<10}{
+                    fila['stock']:<10}"
+
             return visualizacion_productos
     except PermissionError:
         consola(f"{MENSAJE_ERROR_PERMISOS} para mostrar el csv")
 
 # METODO PARA AÑADIR PRODUCTOS
+
+
 def aniadir_producto(producto_a_aniadir):
     try:
         with open(RUTA_ARCHIVO, "a", encoding="utf-8", newline="") as archivo:
-            escritor_csv = csv.DictWriter(archivo, fieldnames=COLUMNAS, delimiter=";")
+            escritor_csv = csv.DictWriter(
+                archivo, fieldnames=COLUMNAS, delimiter=";")
             if no_tiene_contenido():
                 escritor_csv.writeheader()
             escritor_csv.writerow(producto_a_aniadir)
@@ -94,8 +106,11 @@ def aniadir_producto(producto_a_aniadir):
         sys.exit()
 
 # COMPROBAR EL NOMBRE DEL PRODUCTO
+
+
 def contolar_nombre_producto():
-    nombre_producto = utiles.pedir_cadena_no_vacia(PETICION_NOMBRE, MENSAJE_ERROR).strip()
+    nombre_producto = utiles.pedir_cadena_no_vacia(
+        PETICION_NOMBRE, MENSAJE_ERROR).strip()
     if not no_tiene_contenido():
         if buscar_producto(nombre_producto) is not None:
             consola(f"¡VAYA! Parece que ya existe el producto")
@@ -106,19 +121,23 @@ def contolar_nombre_producto():
         return nombre_producto
 
 # MÉTODO PARA CREAR UN PRODUCTO
+
+
 def crear_producto():
-     nombre = contolar_nombre_producto()
-     if nombre is None:
-         return None  # MODIFICADO: Cancela el diccionario si el producto está repetido
-     
-     producto_a_crear = {
-         "nombre": nombre,
-         "precio": utiles.pedir_numero_no_negativo(PETICION_PRECIO, MENSAJE_ERROR, MENSAJE_ERROR_NUMERO_DOUBLE),
-         "stock": utiles.pedir_numero_entero_no_negativo(PETICION_STOCK, MENSAJE_ERROR, MENSAJE_ERROR_NUMERO_ENTERO)
-        }
-     return producto_a_crear
+    nombre = contolar_nombre_producto()
+    if nombre is None:
+        return None  # MODIFICADO: Cancela el diccionario si el producto está repetido
+
+    producto_a_crear = {
+        "nombre": nombre,
+        "precio": utiles.pedir_numero_no_negativo(PETICION_PRECIO, MENSAJE_ERROR, MENSAJE_ERROR_NUMERO_DOUBLE),
+        "stock": utiles.pedir_numero_entero_no_negativo(PETICION_STOCK, MENSAJE_ERROR, MENSAJE_ERROR_NUMERO_ENTERO)
+    }
+    return producto_a_crear
 
 # BUSCAR PRODUCTO POR NOMBRE - DEVUELVE UN DICCIONARIO CON EL PRODUCTO
+
+
 def buscar_producto(nombre_producto):
     producto_encontrado = None
     try:
@@ -130,14 +149,16 @@ def buscar_producto(nombre_producto):
                         "nombre": fila['nombre'],
                         "precio": fila['precio'],
                         "stock": fila['stock']
-                        }
-                    producto_encontrado =  diccionario_producto
+                    }
+                    producto_encontrado = diccionario_producto
         return producto_encontrado
     except PermissionError as error_lectura:
         consola(f"{MENSAJE_ERROR_PERMISOS} {error_lectura}")
         sys.exit()
 
 # COMPROBAR SI EL NOMBRE DEL PRODUCTO EXISTE - DEVUELVE TRUE SI SE PUDO - FALSE SI NO
+
+
 def modificar_stock(nombre_producto, nuevo_stock):
     se_pudo_modificar = False
     producto_a_cambiar = buscar_producto(nombre_producto)
@@ -155,14 +176,15 @@ def modificar_stock(nombre_producto, nuevo_stock):
                             "nombre": fila['nombre'],
                             "precio": fila['precio'],
                             "stock": fila['stock']
-                            }
+                        }
                         productos_modificados.append(producto_que_existia)
         except PermissionError as error_lectura:
             consola(f"{MENSAJE_ERROR_PERMISOS} {error_lectura}")
             sys.exit()
         try:
             with open(RUTA_ARCHIVO, "w", encoding="utf-8", newline="") as archivo:
-                escritor_csv = csv.DictWriter(archivo, fieldnames=COLUMNAS, delimiter=";")
+                escritor_csv = csv.DictWriter(
+                    archivo, fieldnames=COLUMNAS, delimiter=";")
                 escritor_csv.writeheader()
                 escritor_csv.writerows(productos_modificados)
         except PermissionError as error_escritura:
@@ -172,16 +194,21 @@ def modificar_stock(nombre_producto, nuevo_stock):
     return se_pudo_modificar
 
 # Devuelve una cadena con los datos del producto
+
+
 def mostrar_producto(producto):
     return f"{producto['nombre']} | {producto['precio']} € | {producto['stock']} unidades"
 
 # ================ MAIN ===============
+
+
 def main():
     comprobar_existencia_archivo()
     opcion_elegida = ""
     while opcion_elegida != 0:
 
-        opcion_elegida = utiles.pedir_numero_en_rango(0, 4, INTERFAZ_MENU, MENSAJE_ERROR, ERROR_INTERFAZ)
+        opcion_elegida = utiles.pedir_numero_en_rango(
+            0, 4, INTERFAZ_MENU, MENSAJE_ERROR, ERROR_INTERFAZ)
 
         # Lista los productos
         if opcion_elegida == 1:
@@ -192,7 +219,7 @@ def main():
         # Añade un nuevo producto
         elif opcion_elegida == 2:
             producto_nuevo = crear_producto()
-            if producto_nuevo is not None: 
+            if producto_nuevo is not None:
                 aniadir_producto(producto_nuevo)
             else:
                 consola("Regresando al menú principal...")
@@ -205,7 +232,8 @@ def main():
         # Muestra un producto
         elif opcion_elegida == 4:
             if not no_tiene_contenido():
-                producto_buscado = buscar_producto(utiles.pedir_cadena_no_vacia(PETICION_NOMBRE, MENSAJE_ERROR).strip())
+                producto_buscado = buscar_producto(
+                    utiles.pedir_cadena_no_vacia(PETICION_NOMBRE, MENSAJE_ERROR).strip())
                 if producto_buscado is not None:
                     consola(mostrar_producto(producto_buscado))
                 else:
@@ -214,6 +242,7 @@ def main():
                 consola(f"¡VAYA! Aun no hay productos en el archivo")
         else:
             consola("ADIOS")
+
 
 if __name__ == "__main__":
     main()
