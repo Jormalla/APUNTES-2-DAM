@@ -25,6 +25,8 @@ PETICION_CLIENTE = "Ingrese el nombre del cliete: "
 PETICION_MAIL = "Ingrese el correo electrónico: "
 PETICION_CIUDAD = "Ingrese la ciudad: "
 NO_HAY_CLIENTES = "¡VAYA! Parece que aun no hay clientes"
+PREGUNTAR_GUARDAR = f"¿Estás seguro de que quieres aplicar los cambios a {NOMBRE_ARCHIVO}? Sí (s) No (n): "
+REDIRIGIENDO_AL_MENU = "Redirigiendo al menú principal ..."
 
 # COLUMNAS
 CAMPOS = ["nombre", "email", "ciudad", "activo"]
@@ -103,7 +105,7 @@ def cambiar_estado(lista):
         nombre_cliente = utiles.pedir_cadena_no_vacia(PETICION_CLIENTE, MENSAJE_CAMPO_VACIO)
         cliente = buscar_cliente(lista, nombre_cliente)
         if cliente is None:
-            utiles.consola(f"¡UPS! El cliente {nombre_cliente} no existe. Regirigiendo al menú principal ...")
+            utiles.consola(f"¡UPS! El cliente {nombre_cliente} no existe. {REDIRIGIENDO_AL_MENU}")
         else:
             if utiles.confirmar_accion(f"El estado actual de {nombre_cliente} es: {cliente.visualizar_actividad()}.\n¿Deseas cambiarla? Sí (s) No (n):"):
                 if cliente.esta_activo():
@@ -112,7 +114,33 @@ def cambiar_estado(lista):
                     cliente.set_activo(True)
                 utiles.consola(f"Estado cambiado a {cliente.visualizar_actividad()}")
             else:
-                utiles.consola(f"Cancelando el cambio de estado de {nombre_cliente}. Redirigiendo al menú principal ...")
+                utiles.consola(f"Cancelando el cambio de estado de {nombre_cliente}. {REDIRIGIENDO_AL_MENU}")
+
+# MÉTODO PARA GUARDAR EL CSV
+def guardar_csv(lista):
+    if utiles.confirmar_accion(PREGUNTAR_GUARDAR):
+        try:
+            with open(RUTA_ARCHIVO, "w", encoding="utf-8", newline="") as archivo:
+                escritor_csv = csv.DictWriter(archivo, fieldnames=CAMPOS, delimiter=";")
+                escritor_csv.writeheader()
+                
+                # Convertimos la lista de objetos Cliente a una lista de diccionarios
+                clientes_diccionarios = []
+                for cliente in lista:
+                    fila = {
+                        "nombre": cliente.get_nombre(),
+                        "email": cliente.get_email(),   # Cambiar si tu método se llama diferente
+                        "ciudad": cliente.get_ciudad(), # Cambiar si tu método se llama diferente
+                        "activo": cliente.esta_activo() # Cambiar si usas otra propiedad/método (ej. cliente.activo)
+                    }
+                    clientes_diccionarios.append(fila)
+                escritor_csv.writerows(clientes_diccionarios)
+                utiles.consola("¡Datos guardados con éxito!")
+                
+        except PermissionError as error_escritura:
+            utiles.consola(f"{ERROR_PERMISOS} {error_escritura}")
+    else:
+        utiles.consola(REDIRIGIENDO_AL_MENU)
 
 # ============= MAIN ============== #
 
@@ -136,7 +164,7 @@ def main():
         elif opcion_elegida == 4:
             cambiar_estado(clientes)
         elif opcion_elegida == 5:
-            utiles.consola("Opción 5")
+            guardar_csv(clientes)
         else:
             utiles.consola(MENSAJE_SALIDA)
 
