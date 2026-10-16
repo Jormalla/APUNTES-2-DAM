@@ -74,6 +74,22 @@ def listar_clientes(clientes_lista: list):
         for cliente in clientes_lista:
             utiles.consola(f"-> {cliente}")
 
+# MÉTODO PARA BUSCAR UN CLIENTE
+def buscar_cliente(clientes_lista: list):
+    if len(clientes_lista) == 0:
+        utiles.consola("¡VAYA! Parece que aún no hay clientes.")
+    else:
+        encontrado = False
+        nombre_cliente = utiles.pedir_cadena_no_vacia(PETICION_CLIENTE, MENSAJE_CAMPO_VACIO)
+        for cliente in clientes_lista:
+            if nombre_cliente == cliente.get_nombre():
+                utiles.consola(f"-> {cliente}")
+                encontrado = True
+                break
+        if not encontrado:
+            utiles.consola(f"¡VAYA! El cliente {nombre_cliente} no existe")
+
+
 # ============= MAIN ============== #
 
 def main():
@@ -89,8 +105,9 @@ def main():
         # OPCIÓN 2 - LISTAR CLIENTES
         elif opcion_elegida == 2:
             listar_clientes(clientes)
+        # OPCIÓN 3 - BUSCAR CLIENTE
         elif opcion_elegida == 3:
-            utiles.consola("Opción 3")
+            buscar_cliente(clientes)
         elif opcion_elegida == 4:
             utiles.consola("Opción 4")
         elif opcion_elegida == 5:
