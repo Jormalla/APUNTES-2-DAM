@@ -24,6 +24,7 @@ CARGANDO_ARCHIVO = f"Cargando {NOMBRE_ARCHIVO} ..."
 PETICION_CLIENTE = "Ingrese el nombre del cliete: "
 PETICION_MAIL = "Ingrese el correo electrónico: "
 PETICION_CIUDAD = "Ingrese la ciudad: "
+NO_HAY_CLIENTES = "¡VAYA! Parece que aun no hay clientes"
 
 # COLUMNAS
 CAMPOS = ["nombre", "email", "ciudad", "activo"]
@@ -69,7 +70,7 @@ def nuevo_cliente(clientes_lista: list):
 # METODO PARA LISTAR CLIENTES
 def listar_clientes(clientes_lista: list):
     if len(clientes_lista) == 0:
-        utiles.consola("¡VAYA! Parece que aún no hay clientes.")
+        utiles.consola(NO_HAY_CLIENTES)
     else:
         for cliente in clientes_lista:
             utiles.consola(f"-> {cliente}")
@@ -85,7 +86,7 @@ def buscar_cliente(clientes_lista, nombre_cliente):
 # MÉTODO PARA BUSCAR UN CLIENTE
 def mostrar_cliente(clientes_lista: list):
     if len(clientes_lista) == 0:
-        utiles.consola("¡VAYA! Parece que aún no hay clientes.")
+        utiles.consola(NO_HAY_CLIENTES)
     else:
         nombre_cliente = utiles.pedir_cadena_no_vacia(PETICION_CLIENTE, MENSAJE_CAMPO_VACIO)
         cliente = buscar_cliente(clientes_lista, nombre_cliente)
@@ -95,7 +96,23 @@ def mostrar_cliente(clientes_lista: list):
             utiles.consola(f"-> {cliente}")
 
 # MÉTODO PARA CAMBIAR ESTADO DEL CLIENTE
-
+def cambiar_estado(lista):
+    if len(lista) == 0:
+        utiles.consola(NO_HAY_CLIENTES)
+    else:
+        nombre_cliente = utiles.pedir_cadena_no_vacia(PETICION_CLIENTE, MENSAJE_CAMPO_VACIO)
+        cliente = buscar_cliente(lista, nombre_cliente)
+        if cliente is None:
+            utiles.consola(f"¡UPS! El cliente {nombre_cliente} no existe. Regirigiendo al menú principal ...")
+        else:
+            if utiles.confirmar_accion(f"El estado actual de {nombre_cliente} es: {cliente.visualizar_actividad()}.\n¿Deseas cambiarla? Sí (s) No (n):"):
+                if cliente.esta_activo():
+                    cliente.set_activo(False)
+                else:
+                    cliente.set_activo(True)
+                utiles.consola(f"Estado cambiado a {cliente.visualizar_actividad()}")
+            else:
+                utiles.consola(f"Cancelando el cambio de estado de {nombre_cliente}. Redirigiendo al menú principal ...")
 
 # ============= MAIN ============== #
 
@@ -117,7 +134,7 @@ def main():
             mostrar_cliente(clientes)
         # OPCIÓN 4 - CAMBIAR EL ESTADO DEL CLIENTE
         elif opcion_elegida == 4:
-            utiles.consola("Opción 4")
+            cambiar_estado(clientes)
         elif opcion_elegida == 5:
             utiles.consola("Opción 5")
         else:
