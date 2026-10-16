@@ -1,20 +1,12 @@
 class Cliente:
-    __numero_clientes = 0
+
     def __init__(self, nombre, email, ciudad, activo = True):
-        self.__id = self.__generar_id()
         self.__nombre = nombre
         self.__email = email
         self.__ciudad = ciudad
         self.__activo = activo
 
-    def __generar_id(self):
-        nueva_id = Cliente.__numero_clientes
-        Cliente.__numero_clientes += 1
-        return nueva_id
-
     # ==== SETTERS & GETTERS
-    def get_id(self):
-        return self.__id
     
     def get_nombre(self):
         return self.__nombre
