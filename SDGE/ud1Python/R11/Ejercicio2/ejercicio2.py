@@ -129,9 +129,9 @@ def guardar_csv(lista):
                 for cliente in lista:
                     fila = {
                         "nombre": cliente.get_nombre(),
-                        "email": cliente.get_email(),   # Cambiar si tu método se llama diferente
-                        "ciudad": cliente.get_ciudad(), # Cambiar si tu método se llama diferente
-                        "activo": cliente.esta_activo() # Cambiar si usas otra propiedad/método (ej. cliente.activo)
+                        "email": cliente.get_email(),   
+                        "ciudad": cliente.get_ciudad(), 
+                        "activo": cliente.esta_activo()
                     }
                     clientes_diccionarios.append(fila)
                 escritor_csv.writerows(clientes_diccionarios)
