@@ -1,13 +1,14 @@
 import java.io.IOException;
-import java.util.Arrays;
+
 
 public class LanzarProceso {
     public static void main(String[] args) {
-        ProcessBuilder caclculadora = new ProcessBuilder("calc.exe");
+        String proceso = "calc.exe";
+        ProcessBuilder caclculadora = new ProcessBuilder(proceso);
         try {
             Process procesoInicio = caclculadora.start();
             int retorno = procesoInicio.waitFor();
-            System.out.println("La ejecución de " + Arrays.toString(args) + " devuelve " + retorno);  
+            System.out.println("La ejecución de " + proceso + " devuelve " + retorno);  
         } catch (IOException e) {
             System.err.println("¡ERROR!¡Excepción de Entrada/Ssalida!");
             System.exit(-1);
