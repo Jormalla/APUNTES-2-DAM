@@ -13,7 +13,7 @@ import utiles
 import ficheros
 
 # MENSAJES
-INTERFAZ_MENU = "===== GESTIÓN DE CLIENTES =====\n1) Dar de alta un nuevo cliente\n2) Listar clientes\n3) Buscar cliente\n4) Cambiar estado del cliente\n5) Guardar en CSV\n6) Cargar CSV\nIngrese una opción: "
+INTERFAZ_MENU = "===== GESTIÓN DE CLIENTES =====\n1) Dar de alta un nuevo cliente\n2) Listar clientes\n3) Buscar cliente\n4) Cambiar estado del cliente\n5) Guardar en CSV\nIngrese una opción: "
 MENSAJE_CAMPO_VACIO = "¡ERROR! No debes dejar este campo vacío."
 ERROR_INTERFAZ = "¡ERROR! Debes elegir una opción válida."
 PETICION_CREAR_ARCHIVO = "No existe el archvio clientes.csv, ¿Te gustaría crearlo? Sí (s) o No (n): "
@@ -64,7 +64,7 @@ def nuevo_cliente(clientes_lista: list):
     ciudad = utiles.pedir_cadena_no_vacia(PETICION_CIUDAD, MENSAJE_CAMPO_VACIO)
     cliente_nuevo = Cliente(nombre, email, ciudad)
     clientes_lista.append(cliente_nuevo)
-    utiles.consola(f"{cliente_nuevo} creado con éxito.")
+    utiles.consola(f"{cliente_nuevo.get_nombre()} creado con éxito.")
 
 # METODO PARA LISTAR CLIENTES
 def listar_clientes(clientes_lista: list):
@@ -81,7 +81,7 @@ def main():
     opcion_elegida = 1
     clientes = cargar_clientes()
     while opcion_elegida != 0:
-        opcion_elegida = utiles.pedir_numero_en_rango(0, 6, INTERFAZ_MENU, MENSAJE_CAMPO_VACIO, ERROR_INTERFAZ)
+        opcion_elegida = utiles.pedir_numero_en_rango(0, 5, INTERFAZ_MENU, MENSAJE_CAMPO_VACIO, ERROR_INTERFAZ)
 
          # OPCION 1 - DAR DE ALTA
         if opcion_elegida == 1:
@@ -95,8 +95,6 @@ def main():
             utiles.consola("Opción 4")
         elif opcion_elegida == 5:
             utiles.consola("Opción 5")
-        elif opcion_elegida == 6:
-            utiles.consola("Opción 6")
         else:
             utiles.consola(MENSAJE_SALIDA)
 

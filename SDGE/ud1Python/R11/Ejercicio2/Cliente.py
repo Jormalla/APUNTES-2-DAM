@@ -42,4 +42,4 @@ class Cliente:
     # ==== TO STRING
 
     def __str__(self):
-        return f"[{self.get_id()}] --> {self.get_nombre()} | MAIL: {self.get_email()} | CIUDAD: {self.get_ciudad()} | ESTADO: {self.visualizar_actividad()}"
+        return f"{self.get_nombre()} | MAIL: {self.get_email()} | CIUDAD: {self.get_ciudad()} | ESTADO: {self.visualizar_actividad()}"
