@@ -3,6 +3,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Ejercicio3
+ * @author Jorge Martín Llaneli 2º DAM | ESCUELA ARTE GRANADA
+ */
 public class Ejercicio3 {
 
     /**

@@ -2,6 +2,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Ejercicio2
+ * @author Jorge Martín Llaneli 2º DAM | ESCUELA ARTE GRANADA
+ */
 public class Ejercicio2 {
 
     /**

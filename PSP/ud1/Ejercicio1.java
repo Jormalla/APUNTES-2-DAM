@@ -3,6 +3,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
+/**
+ * Ejercicio1
+ * @author Jorge Martín Llaneli 2º DAM | ESCUELA ARTE GRANADA
+ */
 public class Ejercicio1 {
     /**
      * FUNCIÓN PARA CONTROL ERRORES CADENA VACÍA

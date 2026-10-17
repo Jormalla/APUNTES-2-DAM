@@ -6,6 +6,10 @@ import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Ejercicio4
+ * @author Jorge Martín Llaneli 2º DAM | ESCUELA ARTE GRANADA
+ */
 public class Ejercicio4 {
 
     public static void main(String[] args) {

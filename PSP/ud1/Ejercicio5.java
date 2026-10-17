@@ -1,6 +1,11 @@
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Ejercicio5
+ * 
+ * @author Jorge Martín Llaneli 2º DAM | ESCUELA ARTE GRANADA
+ */
 public class Ejercicio5 {
 
     public static void main(String[] args) {
