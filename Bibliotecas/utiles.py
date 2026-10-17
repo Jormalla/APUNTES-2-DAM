@@ -49,7 +49,7 @@ def pedir_numero_entero_no_negativo(mensaje_input, aviso_error, mensaje_fallo_en
     # Valida que no esté vacio
     numero_a_comprobar = pedir_cadena_no_vacia(mensaje_input, aviso_error)
     
-    # Intenta convertir a int y verifica si es positivo
+    # Intenta convertir a int y verifica si es mayor o igual a 0
     try:
       valor_numerico = int(numero_a_comprobar)
       if valor_numerico >= 0:
@@ -59,6 +59,21 @@ def pedir_numero_entero_no_negativo(mensaje_input, aviso_error, mensaje_fallo_en
     except ValueError:
       # Si int() falla
       consola(mensaje_fallo_en_numero)
+
+# Método para pedir un número entero mayor a 0
+def pedir_numero_entero_positivo(mensaje_input, error_campo_vacio, fallo_en_numero):
+  while True:
+    # Valida que no este vacio
+    numero_a_comprobar = pedir_cadena_no_vacia(mensaje_input, error_campo_vacio)
+    # Intenta convertir a int y verifica si es mayor a 0
+    try:
+      valor_numerico = int(numero_a_comprobar)
+      if valor_numerico > 0:
+        return valor_numerico
+      else:
+        consola(fallo_en_numero)
+    except ValueError:
+      consola(fallo_en_numero)
 
 
 # Valida que sea un número entero en el rango
