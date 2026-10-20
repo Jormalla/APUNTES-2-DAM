@@ -1,4 +1,4 @@
-package AccesoDatos.UD1.R3.Ejercicio3y4;
+package AccesoDatos.UD1.R3.Ejercicio3;
 
 import java.io.Serializable;
 

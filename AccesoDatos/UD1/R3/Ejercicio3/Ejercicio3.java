@@ -1,4 +1,4 @@
-package AccesoDatos.UD1.R3.Ejercicio3y4;
+package AccesoDatos.UD1.R3.Ejercicio3;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,7 +24,7 @@ public class Ejercicio3 {
     public static void main(String[] args) throws ParserConfigurationException, TransformerException {
 
         // VARIABLES
-        Path rutaProductos = Path.of("AccesoDatos", "UD1", "R3", "Ejercicio3y4", "datos", "productos.xml");
+        Path rutaProductos = Path.of("AccesoDatos", "UD1", "R3", "Ejercicio3", "datos", "productos.xml");
         // MENSAJES
         final String MENSAJE_CREACION_RUTA = "El directorio 'datos/' no existe.\n Creando ruta y archivo '/productos.xml' ...";
         final String MENSAJE_CREACION_ARCHIVO = "El archivo '/productos.xml' no existe. Creando archivo ...";
