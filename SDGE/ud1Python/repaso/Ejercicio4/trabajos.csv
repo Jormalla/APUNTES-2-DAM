@@ -1,0 +1,3 @@
+tipo,codigo,cliente,horas,estado,precio_pieza
+reparacion,R1,Ana,2.0,finalizado,40.0
+remota,A1,Luis,2.0,pendiente,0.0
