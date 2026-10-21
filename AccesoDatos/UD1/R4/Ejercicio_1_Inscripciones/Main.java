@@ -49,7 +49,6 @@ public class Main {
                             System.out.println(alta ? "Inscripción añadida." : "Datos incorrectos o ID repetido.");
                         }
                         case 4 -> {
-                            // TODO 1.6-A - Pedir ID y nuevas plazas, llamar a actualizarPlazas
                             // y mostrar un mensaje distinto según el boolean recibido.
                             // Solicita ID, plazas y muestra el resultado.
                             System.out.print("ID de la inscripción que quieres modificar: ");
