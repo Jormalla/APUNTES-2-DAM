@@ -80,10 +80,17 @@ public class GestorInscripciones {
         return false;
     }
 
-    // TODO 1.4 - Eliminar el ID solicitado y conservar todos los demás.
     // Si no existe, NO reescribir el archivo ni su copia.
     public static boolean eliminar(Path archivo, int id) throws IOException {
         // PASO 4: reconstruye la lista omitiendo el ID solicitado.
+        List<Inscripcion> lista = cargar(archivo);
+        Inscripcion inscripcionAEliminar = buscar(lista, id);
+        if (inscripcionAEliminar != null) {
+            crearCopiaSiExiste(archivo);
+            lista.remove(inscripcionAEliminar);
+            guardarTodo(archivo, lista);
+            return true;
+        }
         return false;
     }
 

@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Path archivo = Path.of("AccesoDatos", "UD1", "R4", "Ejercicio_1_Inscripciones","datos", "inscripciones.csv");
+        Path archivo = Path.of("AccesoDatos", "UD1", "R4", "Ejercicio_1_Inscripciones", "datos", "inscripciones.csv");
         try (Scanner teclado = new Scanner(System.in)) {
             int opcion = -1;
             while (opcion != 0) {
@@ -56,15 +56,30 @@ public class Main {
                             System.err.print("Ingrese el nuevo número de plazas: ");
                             int plazas = Integer.parseInt(teclado.nextLine().trim());
                             if (GestorInscripciones.actualizarPlazas(archivo, id, plazas)) {
-                                System.err.println("Plazas actualizadas:\n" + GestorInscripciones.buscar(GestorInscripciones.cargar(archivo), id));
+                                System.err.println("Plazas actualizadas:\n"
+                                        + GestorInscripciones.buscar(GestorInscripciones.cargar(archivo), id));
                             } else {
-                                System.out.println("La inscripción con id " + id + " NO EXISTE o el número de plazas es menor a 0");
+                                System.out.println("La inscripción con id " + id
+                                        + " NO EXISTE o el número de plazas es menor a 0");
                             }
                         }
                         case 5 -> {
-                            // TODO 1.6-B - Pedir ID, eliminar y mostrar el resultado.
                             // Solicita ID para eliminar y muestra el resultado.
-                            System.out.println("TODO 1.6-B pendiente.");
+                            System.out.print("ID de la inscripción que quieres eliminar: ");
+                            int id = Integer.parseInt(teclado.nextLine().trim());
+                            // Puede eliminarlo
+                            if (GestorInscripciones.eliminar(archivo, id)) {
+                                List<Inscripcion> lista = GestorInscripciones.cargar(archivo);
+                                if (lista.isEmpty()) {
+                                    System.out.println("La lista está vacía");
+                                } else {
+                                    for (Inscripcion item : lista) {
+                                        System.out.println(item);
+                                    }
+                                }
+                            } else {
+                                System.err.println("La inscripción con id " + id + " no existe.");
+                            }
                         }
                         case 6 -> {
                             // TODO 1.6-C - Pedir confirmación S/N antes de restaurar.
