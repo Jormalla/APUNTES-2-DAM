@@ -19,7 +19,7 @@ public class GestorInscripciones {
         Set<Integer> idsDocumento = new HashSet<>();
         final int CANTIDAD_COLUMNAS = 4;
         if (Files.exists(archivo) && Files.isRegularFile(archivo)) {
-            List<String> texto = Files.readAllLines(archivo, StandardCharsets.UTF_8);
+            List<String> texto = Files.readAllLines(archivo);
             // LA CABECERA NO LA COMPROBAMOS
             for (int i = 1; i < texto.size(); i++) {
                 columnas = texto.get(i).split(";", -1);
@@ -111,7 +111,7 @@ public class GestorInscripciones {
 
     private static void crearCopiaSiExiste(Path archivo) throws IOException {
         if (Files.exists(archivo)) {
-            Path copia = Path.of(archivo.toString() + ".bak");
+            Path copia = Path.of(archivo + ".bak");
             Files.copy(archivo, copia, StandardCopyOption.REPLACE_EXISTING);
         }
     }
