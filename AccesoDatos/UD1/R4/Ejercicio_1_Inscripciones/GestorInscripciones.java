@@ -66,10 +66,17 @@ public class GestorInscripciones {
         return true;
     }
 
-    // TODO 1.3 - Si el ID existe y plazas >= 0, cambiar SOLO ese registro.
     // Crear copia antes de reescribir. Si no existe o plazas < 0, devolver false.
     public static boolean actualizarPlazas(Path archivo, int id, int plazas) throws IOException {
         // PASO 3: carga, busca, valida, crea copia y guarda.
+        List<Inscripcion> lista = cargar(archivo);
+        Inscripcion inscripcionAModificar = buscar(lista, id);
+        if (inscripcionAModificar != null && plazas >= 0) {
+            crearCopiaSiExiste(archivo);
+            inscripcionAModificar.setPlazas(plazas);
+            guardarTodo(archivo, lista);
+            return true;
+        }
         return false;
     }
 

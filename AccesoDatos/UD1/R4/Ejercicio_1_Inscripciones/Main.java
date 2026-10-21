@@ -52,7 +52,15 @@ public class Main {
                             // TODO 1.6-A - Pedir ID y nuevas plazas, llamar a actualizarPlazas
                             // y mostrar un mensaje distinto según el boolean recibido.
                             // Solicita ID, plazas y muestra el resultado.
-                            System.out.println("TODO 1.6-A pendiente.");
+                            System.out.print("ID de la inscripción que quieres modificar: ");
+                            int id = Integer.parseInt(teclado.nextLine().trim());
+                            System.err.print("Ingrese el nuevo número de plazas: ");
+                            int plazas = Integer.parseInt(teclado.nextLine().trim());
+                            if (GestorInscripciones.actualizarPlazas(archivo, id, plazas)) {
+                                System.err.println("Plazas actualizadas:\n" + GestorInscripciones.buscar(GestorInscripciones.cargar(archivo), id));
+                            } else {
+                                System.out.println("La inscripción con id " + id + " NO EXISTE");
+                            }
                         }
                         case 5 -> {
                             // TODO 1.6-B - Pedir ID, eliminar y mostrar el resultado.
