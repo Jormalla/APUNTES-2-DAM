@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Path archivo = Path.of("datos", "inscripciones.csv");
+        Path archivo = Path.of("AccesoDatos", "UD1", "R4", "Ejercicio_1_Inscripciones","datos", "inscripciones.csv");
         try (Scanner teclado = new Scanner(System.in)) {
             int opcion = -1;
             while (opcion != 0) {
