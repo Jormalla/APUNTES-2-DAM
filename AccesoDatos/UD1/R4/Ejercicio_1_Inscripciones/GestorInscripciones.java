@@ -10,8 +10,6 @@ import java.util.Set;
 
 public class GestorInscripciones {
     private static final String CABECERA = "id;persona;taller;plazas";
-
-    // TODO 1.1 - Leer el CSV en UTF-8, ignorar cabecera y validar TODAS las filas.
     // Si el archivo no existe, devolver una lista vacía.
     // Si una fila es incorrecta o hay IDs duplicados, lanzar IOException.
     public static List<Inscripcion> cargar(Path archivo) throws IOException {
@@ -45,10 +43,15 @@ public class GestorInscripciones {
         return inscripciones;
     }
 
-    // TODO 1.2 - Buscar por ID. Devolver la inscripción o null.
     public static Inscripcion buscar(List<Inscripcion> lista, int id) {
         // PASO 2: recorre la lista y compara los ID.
-        return null;
+        Inscripcion inscripcionEncontrada = null;
+        for (Inscripcion inscripcion : lista) {
+            if (inscripcion.getId() == id) {
+                inscripcionEncontrada = inscripcion;
+            }
+        }
+        return inscripcionEncontrada;
     }
 
     // MÉTODO RESUELTO COMO EJEMPLO: no hay que modificarlo.
