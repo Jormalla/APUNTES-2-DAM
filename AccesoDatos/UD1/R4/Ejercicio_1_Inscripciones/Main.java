@@ -58,7 +58,7 @@ public class Main {
                             if (GestorInscripciones.actualizarPlazas(archivo, id, plazas)) {
                                 System.err.println("Plazas actualizadas:\n" + GestorInscripciones.buscar(GestorInscripciones.cargar(archivo), id));
                             } else {
-                                System.out.println("La inscripción con id " + id + " NO EXISTE");
+                                System.out.println("La inscripción con id " + id + " NO EXISTE o el número de plazas es menor a 0");
                             }
                         }
                         case 5 -> {
