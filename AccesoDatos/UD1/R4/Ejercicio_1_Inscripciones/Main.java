@@ -3,6 +3,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
+import Bibliotecas.MisUtiles;
+
 public class Main {
     public static void main(String[] args) {
         Path archivo = Path.of("AccesoDatos", "UD1", "R4", "Ejercicio_1_Inscripciones", "datos", "inscripciones.csv");
@@ -82,9 +84,12 @@ public class Main {
                             }
                         }
                         case 6 -> {
-                            // TODO 1.6-C - Pedir confirmación S/N antes de restaurar.
                             // Pide confirmación antes de llamar a restaurar.
-                            System.out.println("TODO 1.6-C pendiente.");
+                            if (MisUtiles.confirmarAccion("¿Seguro qué quieres restaurar el archivo? Luego no se podrá revertir.", teclado)) {
+                                
+                            } else {
+                                System.err.println("Restauración cancelada.");
+                            }
                         }
                         case 0 -> System.out.println("Hasta luego.");
                         default -> System.out.println("Opción desconocida.");

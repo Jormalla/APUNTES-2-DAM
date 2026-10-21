@@ -10,6 +10,7 @@ import java.util.Set;
 
 public class GestorInscripciones {
     private static final String CABECERA = "id;persona;taller;plazas";
+
     // Si el archivo no existe, devolver una lista vacía.
     // Si una fila es incorrecta o hay IDs duplicados, lanzar IOException.
     public static List<Inscripcion> cargar(Path archivo) throws IOException {
@@ -35,8 +36,9 @@ public class GestorInscripciones {
                     } else {
                         throw new IOException("El archivo contiene ids duplicados.");
                     }
-                } else{
-                    throw new IOException("El archivo no tiene las columnas necesarias: " + CANTIDAD_COLUMNAS + " columnas requeridas.");
+                } else {
+                    throw new IOException("El archivo no tiene las columnas necesarias: " + CANTIDAD_COLUMNAS
+                            + " columnas requeridas.");
                 }
             }
         }
@@ -94,10 +96,19 @@ public class GestorInscripciones {
         return false;
     }
 
-    // TODO 1.5 - Restaurar archivo.csv.bak sobre archivo.csv.
     // La confirmación se pide en Main, NO aquí.
     public static boolean restaurar(Path archivo) throws IOException {
         // PASO 5: localiza .bak y cópialo sobre el CSV.
+        List<String> nuevas = new ArrayList<>();
+        Path bak = Path.of(archivo + ".bak");
+        if (Files.exists(archivo)) {
+            List<String> contenidoBackup = Files.readAllLines(bak, StandardCharsets.UTF_8);
+            for (int i = 0; i < contenidoBackup.size(); i++) {
+                nuevas.add(contenidoBackup.get(i));
+            }
+            Files.write(archivo, nuevas, StandardCharsets.UTF_8);
+            return true;
+        }
         return false;
     }
 
