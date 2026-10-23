@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Path binario = Path.of("datos", "equipos.dat");
-        Path xml = Path.of("datos", "equipos_exportados.xml");
+        Path binario = Path.of("AccesoDatos", "UD1", "R4", "Ejercicio_2_Equipos", "datos", "equipos.dat");
+        Path xml = Path.of("AccesoDatos", "UD1", "R4", "Ejercicio_2_Equipos", "datos", "equipos_exportados.xml");
         try (Scanner teclado = new Scanner(System.in)) {
             try {
                 List<Equipo> equipos = RepositorioEquipos.cargar(binario);
