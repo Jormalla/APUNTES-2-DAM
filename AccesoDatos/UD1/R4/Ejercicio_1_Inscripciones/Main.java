@@ -86,7 +86,7 @@ public class Main {
                         case 6 -> {
                             // Pide confirmación antes de llamar a restaurar.
                             if (MisUtiles.confirmarAccion("¿Seguro qué quieres restaurar el archivo? Luego no se podrá revertir.", teclado)) {
-                                
+                                GestorInscripciones.restaurar(archivo);
                             } else {
                                 System.err.println("Restauración cancelada.");
                             }
