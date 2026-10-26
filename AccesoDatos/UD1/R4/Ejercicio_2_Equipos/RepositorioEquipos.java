@@ -21,11 +21,17 @@ import org.w3c.dom.Element;
 
 public class RepositorioEquipos {
     // 2.1 - Recuperar la lista serializada con ObjectInputStream.
-    // Si no existe el .dat, devolver lista vacía. Comprobar tipos, IDs y duplicados.
+    // Si no existe el .dat, devolver lista vacía. Comprobar tipos, IDs y
+    // duplicados.
     public static List<Equipo> cargar(Path archivo) throws IOException {
         // PASO 1: si el fichero falta, devuelve una lista vacía.
         // Si existe, lee un Object y valida su contenido.
-        
+        List<Equipo> equipos = new ArrayList<>();
+        if (!Files.exists(archivo) || !Files.isRegularFile(archivo)) {
+            return equipos;
+        }
+
+
         return new ArrayList<>();
     }
 
