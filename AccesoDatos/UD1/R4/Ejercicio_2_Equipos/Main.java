@@ -3,6 +3,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
+import Bibliotecas.MisUtiles;
+
 public class Main {
     public static void main(String[] args) {
         Path binario = Path.of("AccesoDatos", "UD1", "R4", "Ejercicio_2_Equipos", "datos", "equipos.dat");
@@ -52,9 +54,12 @@ public class Main {
                                 System.out.println("Lista guardada en binario.");
                             }
                             case 5 -> {
-                                // TODO 2.5-B: reemplazar equipos por cargar(binario).
+                                // Reemplazar equipos por cargar(binario).
                                 // Recarga la lista desde el fichero.
-                                System.out.println("TODO 2.5-B pendiente.");
+                                if (MisUtiles.confirmarAccion("¿Estás seguro de querer cargar los datos de nuevo? Aun no se han guardado los cambios", teclado)) {
+                                    equipos = RepositorioEquipos.cargar(binario);
+                                    System.out.println("Equipos cargados nuevamente");
+                                }
                             }
                             case 6 -> {
                                 // TODO 2.5-C: llamar a exportarXml(xml, equipos).
