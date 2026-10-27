@@ -91,10 +91,39 @@ public class RepositorioEquipos {
         return false;
     }
 
-    // TODO 2.4 - Exportar DOM XML. Crear raíz <equipos> y cada <equipo id="...">.
+    // Exportar DOM XML. Crear raíz <equipos> y cada <equipo id="...">.
     // Dentro, <nombre> y <unidades>. No concatenar cadenas XML manualmente.
     // Los errores de XML se convierten en IOException para simplificar Main.
-    public static void exportarXml(Path archivo, List<Equipo> lista) throws IOException {
+    public static void exportarXml(Path archivo, List<Equipo> lista) throws IOException, ParserConfigurationException, TransformerException {
         // PASO 4: crea un Document XML, elementos y Transformer.
+        Document documento = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+        Element raiz = documento.createElement("equipos");
+        documento.appendChild(raiz);
+
+        for (Equipo equipo : lista) {
+            // <equipo id="...">.
+            Element etiquetaEquipo = documento.createElement("equipo");
+            etiquetaEquipo.setAttribute("id", equipo.getId() + "");
+            // <nombre/>
+            Element nombre = documento.createElement("nombre");
+            nombre.setTextContent(equipo.getNombre());
+            // <unidades/>
+            Element unidades = documento.createElement("unidades");
+            unidades.setTextContent(equipo.getUnidades() + "");
+
+            // <equipo id="...">.
+            //      <nombre/>
+            //      <unidades/>
+            // </equipo>
+            etiquetaEquipo.appendChild(nombre);
+            etiquetaEquipo.appendChild(unidades);
+            raiz.appendChild(etiquetaEquipo);
+        }
+
+         // SE GUARDAN LOS DATOS EN EL XML
+        Transformer transformador = TransformerFactory.newInstance().newTransformer();
+        transformador.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        transformador.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformador.transform(new DOMSource(documento), new StreamResult(archivo.toFile()));
     }
 }

@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <equipos>
     <equipo id="201">
         <nombre>Micrófono inalámbrico</nombre>
-        <unidades>5</unidades>
+        <unidades>3</unidades>
     </equipo>
     <equipo id="202">
         <nombre>Cables &amp; adaptadores</nombre>

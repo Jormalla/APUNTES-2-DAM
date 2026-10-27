@@ -60,7 +60,7 @@ public class Ejercicio3 {
             Element precio = documento.createElement("precio");
             precio.setTextContent(producto.getPrecio() + "");
             Element stock = documento.createElement("stock");
-            precio.setTextContent(producto.getStock() + "");
+            stock.setTextContent(producto.getStock() + "");
             etiquetaProducto.appendChild(nombre);
             etiquetaProducto.appendChild(precio);
             etiquetaProducto.appendChild(stock);

@@ -3,10 +3,13 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import Bibliotecas.MisUtiles;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParserConfigurationException, TransformerException {
         Path binario = Path.of("AccesoDatos", "UD1", "R4", "Ejercicio_2_Equipos", "datos", "equipos.dat");
         Path xml = Path.of("AccesoDatos", "UD1", "R4", "Ejercicio_2_Equipos", "datos", "equipos_exportados.xml");
         try (Scanner teclado = new Scanner(System.in)) {
@@ -62,9 +65,10 @@ public class Main {
                                 }
                             }
                             case 6 -> {
-                                // TODO 2.5-C: llamar a exportarXml(xml, equipos).
+                                // Llamar a exportarXml(xml, equipos).
                                 // Exporta la lista a XML.
-                                System.out.println("TODO 2.5-C pendiente.");
+                                RepositorioEquipos.exportarXml(xml, equipos);
+                                System.out.println("Equipos exportados en " + xml);
                             }
                             case 0 -> System.out.println("Hasta luego.");
                             default -> System.out.println("Opción desconocida.");
