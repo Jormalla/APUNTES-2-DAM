@@ -27,12 +27,35 @@ public class RepositorioEquipos {
         // PASO 1: si el fichero falta, devuelve una lista vacía.
         // Si existe, lee un Object y valida su contenido.
         List<Equipo> equipos = new ArrayList<>();
+        HashSet<Integer> idsEquipos = new HashSet<>();
+        HashSet<String> nombresEquipos = new HashSet<>();
         if (!Files.exists(archivo) || !Files.isRegularFile(archivo)) {
             return equipos;
         }
-
-
-        return new ArrayList<>();
+        try (ObjectInputStream entrada = new ObjectInputStream(
+                Files.newInputStream(archivo))) {
+            Object dato = entrada.readObject();
+            if (!(dato instanceof List<?> lista)) {
+                throw new IOException ("El archivo no contiene una lista.");
+            }
+            for (Object elemento : lista) {
+                if (!(elemento instanceof Equipo equipo)) {
+                    throw new IOException ("Se ha encontrado un dato inesperado.");
+                }
+                // Comprueba si el id está duplicado
+                if (!idsEquipos.add(equipo.getId())) {
+                    throw new IOException ("Se ha encontrado al menos una id duplicada.");
+                }
+                // Comprueba si el nombre del equipo está duplicado
+                if (!nombresEquipos.add(equipo.getNombre().strip().toUpperCase())) {
+                    throw new IOException ("Se ha encontrado al menos un nombre de equipo duplicado.");
+                }
+                equipos.add(equipo);
+            }
+        } catch (ClassNotFoundException e) {
+           throw new IOException ("No se pudo recuperar: " + e.getMessage());
+        }
+        return equipos;
     }
 
     // TODO 2.2 - Crear carpeta y guardar la LISTA COMPLETA con ObjectOutputStream.
