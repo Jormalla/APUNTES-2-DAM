@@ -75,10 +75,15 @@ public class RepositorioEquipos {
         return null;
     }
 
-    // TODO 2.3 - Modificar SOLO en memoria. Devolver false si ID desconocido
+    // Modificar SOLO en memoria. Devolver false si ID desconocido
     // o unidades < 0. NO guardar aquí: lo hará Main en opción 4.
     public static boolean cambiarUnidades(List<Equipo> lista, int id, int unidades) {
         // PASO 3: localiza el equipo y cambia sus unidades.
+        Equipo equipo = buscar(lista, id);
+        if (equipo != null && unidades >= 0) {
+            equipo.setUnidades(unidades);
+            return true;
+        }
         return false;
     }
 

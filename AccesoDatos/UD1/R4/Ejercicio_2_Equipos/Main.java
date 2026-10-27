@@ -39,7 +39,12 @@ public class Main {
                                 // TODO 2.5-A: pedir ID y unidades, llamar a cambiarUnidades,
                                 // e informar al usuario desde aquí (nunca desde el repositorio).
                                 // Pide ID, unidades y llama al repositorio.
-                                System.out.println("TODO 2.5-A pendiente.");
+                                System.out.print("ID del equipo que quieres modificar: ");
+                                int id = Integer.parseInt(teclado.nextLine().trim());
+                                System.out.print("Unidades del equipo: ");
+                                int unidades = Integer.parseInt(teclado.nextLine().trim());
+                                Boolean cambiado = RepositorioEquipos.cambiarUnidades(equipos, id, unidades);
+                                System.out.println(cambiado ? "Unidades cambiadas." : "No de pudo modifica las unidades. Revisa que exista el id y que las unidades sean >= 0.");
                             }
                             case 4 -> {
                                 // EJEMPLO COMPLETO: guardado explícito.
