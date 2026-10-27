@@ -36,33 +36,37 @@ public class RepositorioEquipos {
                 Files.newInputStream(archivo))) {
             Object dato = entrada.readObject();
             if (!(dato instanceof List<?> lista)) {
-                throw new IOException ("El archivo no contiene una lista.");
+                throw new IOException("El archivo no contiene una lista.");
             }
             for (Object elemento : lista) {
                 if (!(elemento instanceof Equipo equipo)) {
-                    throw new IOException ("Se ha encontrado un dato inesperado.");
+                    throw new IOException("Se ha encontrado un dato inesperado.");
                 }
                 // Comprueba si el id está duplicado
                 if (!idsEquipos.add(equipo.getId())) {
-                    throw new IOException ("Se ha encontrado al menos una id duplicada.");
+                    throw new IOException("Se ha encontrado al menos una id duplicada.");
                 }
                 // Comprueba si el nombre del equipo está duplicado
                 if (!nombresEquipos.add(equipo.getNombre().strip().toUpperCase())) {
-                    throw new IOException ("Se ha encontrado al menos un nombre de equipo duplicado.");
+                    throw new IOException("Se ha encontrado al menos un nombre de equipo duplicado.");
                 }
                 equipos.add(equipo);
             }
         } catch (ClassNotFoundException e) {
-           throw new IOException ("No se pudo recuperar: " + e.getMessage());
+            throw new IOException("No se pudo recuperar: " + e.getMessage());
         }
         return equipos;
     }
 
-    // TODO 2.2 - Crear carpeta y guardar la LISTA COMPLETA con ObjectOutputStream.
+    // Crear carpeta y guardar la LISTA COMPLETA con ObjectOutputStream.
     // No usar APPEND en ficheros serializados.
     public static void guardar(Path archivo, List<Equipo> lista) throws IOException {
         // PASO 2: crea la carpeta y usa ObjectOutputStream.
         // El método es void: no necesita devolver nada.
+        Files.createDirectories(archivo.getParent());
+        try (ObjectOutputStream salida = new ObjectOutputStream(Files.newOutputStream(archivo))) {
+            salida.writeObject(lista);
+        }
     }
 
     // MÉTODO DE APOYO COMPLETO: busca por ID sin leer archivos.

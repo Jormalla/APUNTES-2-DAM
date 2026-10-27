@@ -36,7 +36,7 @@ public class Main {
                                 System.out.println(encontrado == null ? "ID no encontrado." : encontrado);
                             }
                             case 3 -> {
-                                // TODO 2.5-A: pedir ID y unidades, llamar a cambiarUnidades,
+                                // Pedir ID y unidades, llamar a cambiarUnidades,
                                 // e informar al usuario desde aquí (nunca desde el repositorio).
                                 // Pide ID, unidades y llama al repositorio.
                                 System.out.print("ID del equipo que quieres modificar: ");
