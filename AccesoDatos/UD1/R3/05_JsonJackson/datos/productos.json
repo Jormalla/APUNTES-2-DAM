@@ -1,4 +1,11 @@
-[
-  {"id":1,"nombre":"Teclado","precio":59.90,"stock":8},
-  {"id":2,"nombre":"Ratón","precio":24.50,"stock":15}
-]
+[ {
+  "id" : 1,
+  "nombre" : "Teclado",
+  "precio" : 59.9,
+  "stock" : 8
+}, {
+  "id" : 2,
+  "nombre" : "Ratón",
+  "precio" : 24.5,
+  "stock" : 15
+} ]

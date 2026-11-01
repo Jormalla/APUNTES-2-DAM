@@ -1,0 +1,21 @@
+[ {
+  "id" : 1,
+  "nombre" : "Teclado",
+  "precio" : 59.9,
+  "stock" : 8
+}, {
+  "id" : 2,
+  "nombre" : "Ratón",
+  "precio" : 24.5,
+  "stock" : 15
+}, {
+  "id" : 3,
+  "nombre" : "Monitor",
+  "precio" : 219.0,
+  "stock" : 4
+}, {
+  "id" : 4,
+  "nombre" : "Auriculares",
+  "precio" : 39.95,
+  "stock" : 10
+} ]
