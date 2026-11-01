@@ -1,0 +1,4 @@
+1;Teclado;59.9;8
+2;Ratón;24.5;15
+3;Monitor;219.0;4
+4;Nuevo Producto;10.5;20
