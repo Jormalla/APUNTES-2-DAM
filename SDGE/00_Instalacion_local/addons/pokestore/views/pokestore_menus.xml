@@ -8,6 +8,13 @@
         sequence="10"
     />
     <menuitem
+        id="pokestore_menu_collections"
+        name="Colecciones"
+        parent="pokestore_menu_catalog"
+        action="pokestore_collection_action"
+        sequence="9"
+    />
+    <menuitem
         id="pokestore_menu_figures"
         name="Figuras"
         parent="pokestore_menu_catalog"

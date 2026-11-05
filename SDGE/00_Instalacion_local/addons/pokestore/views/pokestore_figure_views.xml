@@ -7,7 +7,7 @@
             <list string="Figuras">
                 <field name="name"/>
                 <field name="pokemon"/>
-                <field name="collection"/>
+                <field name="collection_id"/>
                 <field name="rarity"/>
                 <field name="price"/>
                 <field name="stock"/>
@@ -24,7 +24,7 @@
                         <group>
                             <field name="name"/>
                             <field name="pokemon"/>
-                            <field name="collection"/>
+                            <field name="collection_id"/>
                         </group>
                         <group>
                             <field name="rarity"/>

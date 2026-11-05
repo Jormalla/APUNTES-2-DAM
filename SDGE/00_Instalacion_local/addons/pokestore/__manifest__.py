@@ -7,6 +7,7 @@
     "depends": ["base"],
     "data": [
         "security/ir.model.access.csv",
+        "views/pokestore_collection_views.xml",
         "views/pokestore_figure_views.xml",
         "views/pokestore_menus.xml",
     ],
