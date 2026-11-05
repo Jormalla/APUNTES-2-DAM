@@ -1,4 +1,4 @@
-package AccesoDatos.UD2.tutoriales.T01_JDBC_CRUD.src.main.java.es.curso.ad.t01;
+package es.curso.ad.t01;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
