@@ -12,7 +12,7 @@
         name="Colecciones"
         parent="pokestore_menu_catalog"
         action="pokestore_collection_action"
-        sequence="9"
+        sequence="8"
     />
     <menuitem
         id="pokestore_menu_figures"
@@ -20,5 +20,12 @@
         parent="pokestore_menu_catalog"
         action="pokestore_figure_action"
         sequence="10"
+    />
+    <menuitem
+        id="pokestore_menu_tags"
+        name="Tags"
+        parent="pokestore_menu_catalog"
+        action="pokestore_tag_action"
+        sequence="9"
     />
 </odoo>

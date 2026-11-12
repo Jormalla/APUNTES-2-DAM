@@ -18,25 +18,23 @@
             <form string="Colección">
                 <sheet>
                     <group>
-                        <group>
-                            <field name="name" />
-                            <field name="generacion" />
-                            <field name="fecha_lanzamiento" />
-                        </group>
-                        <notebook>
-                            <page string="Figuras de la colección">
-                                <field name="figure_ids">
-                                    <list editable="bottom">
-                                        <field name="name" />
-                                        <field name="pokemon" />
-                                        <field name="rarity" />
-                                        <field name="price" />
-                                        <field name="stock" />
-                                    </list>
-                                </field>
-                            </page>
-                        </notebook>
+                        <field name="name" />
+                        <field name="generacion" />
+                        <field name="fecha_lanzamiento" />
                     </group>
+                    <notebook>
+                        <page string="Figuras de la colección">
+                            <field name="figure_ids">
+                                <list editable="bottom">
+                                    <field name="name" />
+                                    <field name="pokemon" />
+                                    <field name="rarity" />
+                                    <field name="price" />
+                                    <field name="stock" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

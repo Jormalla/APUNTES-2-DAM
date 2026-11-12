@@ -11,6 +11,7 @@
                 <field name="rarity"/>
                 <field name="price"/>
                 <field name="stock"/>
+                <field name="stock_value"/>
             </list>
         </field>
     </record>
@@ -30,11 +31,42 @@
                             <field name="rarity"/>
                             <field name="price"/>
                             <field name="stock"/>
+                            <field name="stock_value"/>
                             <field name="active"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Tags de la figura">
+                            <field name="tag_ids">
+                                <list editable="bottom">
+                                    <field name="name" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+        <!-- NUEVA VISTA DE BÚSQUEDA -->
+    <record id="pokestore_figure_view_search" model="ir.ui.view">
+        <field name="name">pokestore.figure.search</field>
+        <field name="model">pokestore.figure</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Figuras">
+                <!-- 1. Buscar por nombre y Pokémon -->
+                <field name="name"/>
+                <field name="pokemon"/>
+                <field name="collection_id"/>
+
+                <!-- 2. Filtro para figuras exclusivas -->
+                <filter name="exclusive_figures" string="Exclusivas" domain="[('rarity', '=', 'exclusive')]"/>
+
+                <!-- 3. Agrupar por colección -->
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_collection" string="Colección" context="{'group_by': 'collection_id'}"/>
+                </group>
+            </search>
         </field>
     </record>
     <record id="pokestore_figure_action" model="ir.actions.act_window">
