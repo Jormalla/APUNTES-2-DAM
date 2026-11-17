@@ -1,4 +1,4 @@
-package es.curso.ad.t01;
+package es.curso.ad.ej1;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -7,17 +7,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 public class ClubDao {
     public int insertar(String nombre, String ciudad,
-                        BigDecimal presupuesto) throws SQLException {
+            BigDecimal presupuesto) throws SQLException {
         String sql = "INSERT INTO club(nombre, ciudad, presupuesto) VALUES (?, ?, ?)";
         try (Connection conexion = Conexion.abrir();
-             PreparedStatement sentencia = conexion.prepareStatement(
-                     sql, Statement.RETURN_GENERATED_KEYS)) {
+                PreparedStatement sentencia = conexion.prepareStatement(
+                        sql, Statement.RETURN_GENERATED_KEYS)) {
             sentencia.setString(1, nombre);
             sentencia.setString(2, ciudad);
             sentencia.setBigDecimal(3, presupuesto);
@@ -35,8 +34,8 @@ public class ClubDao {
         String sql = "SELECT id, nombre, ciudad, presupuesto FROM club ORDER BY id";
         List<Club> clubes = new ArrayList<>();
         try (Connection conexion = Conexion.abrir();
-             PreparedStatement sentencia = conexion.prepareStatement(sql);
-             ResultSet filas = sentencia.executeQuery()) {
+                PreparedStatement sentencia = conexion.prepareStatement(sql);
+                ResultSet filas = sentencia.executeQuery()) {
             while (filas.next()) {
                 clubes.add(leerClub(filas));
             }
@@ -47,7 +46,7 @@ public class ClubDao {
     public Optional<Club> buscar(int id) throws SQLException {
         String sql = "SELECT id, nombre, ciudad, presupuesto FROM club WHERE id = ?";
         try (Connection conexion = Conexion.abrir();
-             PreparedStatement sentencia = conexion.prepareStatement(sql)) {
+                PreparedStatement sentencia = conexion.prepareStatement(sql)) {
             sentencia.setInt(1, id);
             try (ResultSet filas = sentencia.executeQuery()) {
                 if (filas.next()) {
@@ -61,7 +60,7 @@ public class ClubDao {
     public boolean cambiarCiudad(int id, String ciudad) throws SQLException {
         String sql = "UPDATE club SET ciudad = ? WHERE id = ?";
         try (Connection conexion = Conexion.abrir();
-             PreparedStatement sentencia = conexion.prepareStatement(sql)) {
+                PreparedStatement sentencia = conexion.prepareStatement(sql)) {
             sentencia.setString(1, ciudad);
             sentencia.setInt(2, id);
             return sentencia.executeUpdate() == 1;
@@ -71,7 +70,7 @@ public class ClubDao {
     public boolean borrar(int id) throws SQLException {
         String sql = "DELETE FROM club WHERE id = ?";
         try (Connection conexion = Conexion.abrir();
-             PreparedStatement sentencia = conexion.prepareStatement(sql)) {
+                PreparedStatement sentencia = conexion.prepareStatement(sql)) {
             sentencia.setInt(1, id);
             return sentencia.executeUpdate() == 1;
         }
@@ -87,17 +86,41 @@ public class ClubDao {
 
     // Devuelve una lista de clubes cuya ciudad coincida con el parametro
     public List<Club> listarPorCiudad(String ciudad) throws SQLException {
-        // Listo los clubes
-        List<Club> clubes = listar();
+        String sql = "SELECT id, nombre, ciudad, presupuesto FROM club WHERE ciudad = ? ORDER BY nombre";
         List<Club> clubesDeCiudad = new ArrayList<>();
-        // Comprueba si la ciudad es la misma
-        for (Club club : clubes) {
-            if (club.ciudad().equalsIgnoreCase(ciudad)) {
-                clubesDeCiudad.add(club);
+
+        try (Connection conexion = Conexion.abrir();
+                PreparedStatement sentencia = conexion.prepareStatement(sql)) {
+
+            // Asignación del parametro
+            sentencia.setString(1, ciudad);
+
+            // Ejecución del la query
+            try (ResultSet filas = sentencia.executeQuery()) {
+                while (filas.next()) {
+                    clubesDeCiudad.add(leerClub(filas));
+                }
             }
         }
-        clubesDeCiudad.sort(Comparator.comparing(Club::nombre));
-
         return clubesDeCiudad;
+    }
+
+    // Ingresa el jugador
+    public int insertarJugador(String nombre, int dorsal, int clubId) throws SQLException {
+        String sql = "INSERT INTO jugador(nombre, dorsal, club_id) VALUES (?, ?, ?)";
+        try (Connection conexion = Conexion.abrir();
+                PreparedStatement sentencia = conexion.prepareStatement(
+                        sql, Statement.RETURN_GENERATED_KEYS)) {
+            sentencia.setString(1, nombre);
+            sentencia.setInt(2, dorsal);
+            sentencia.setInt(3, clubId);
+            sentencia.executeUpdate();
+            try (ResultSet claves = sentencia.getGeneratedKeys()) {
+                if (claves.next()) {
+                    return claves.getInt(1);
+                }
+                throw new SQLException("No se ha generado el ID del Jugador.");
+            }
+        }
     }
 }

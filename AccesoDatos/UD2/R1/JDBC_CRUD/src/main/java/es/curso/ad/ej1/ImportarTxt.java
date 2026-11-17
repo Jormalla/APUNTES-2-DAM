@@ -1,4 +1,4 @@
-package es.curso.ad.t01;
+package es.curso.ad.ej1;
 
 import java.io.IOException;
 import java.math.BigDecimal;

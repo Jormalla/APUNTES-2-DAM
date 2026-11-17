@@ -1,4 +1,4 @@
-package es.curso.ad.t01;
+package es.curso.ad.ej1;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -21,6 +21,7 @@ public class Main {
             System.out.println("Borrado: " + dao.borrar(id));
             System.out.println("¿Sigue existiendo? " + dao.buscar(id).isPresent());
             System.out.println(dao.listarPorCiudad("Granada"));
+            System.out.println(dao.insertarJugador("Jorge", 77, 1));
         } catch (SQLException e) {
             System.err.println("Error de base de datos: " + e.getMessage());
         }
