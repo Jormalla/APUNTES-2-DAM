@@ -21,7 +21,7 @@ public class Main {
             System.out.println("Borrado: " + dao.borrar(id));
             System.out.println("¿Sigue existiendo? " + dao.buscar(id).isPresent());
             System.out.println(dao.listarPorCiudad("Granada"));
-            System.out.println(dao.insertarJugador("Jorge", 77, 1));
+            System.out.println(dao.insertarJugador("Jorge", 77, 10));
         } catch (SQLException e) {
             System.err.println("Error de base de datos: " + e.getMessage());
         }
