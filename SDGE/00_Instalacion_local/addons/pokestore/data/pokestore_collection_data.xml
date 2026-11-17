@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="collection_kanto" model="pokestore.collection">
+            <field name="name">Kanto</field>
+            <field name="generacion">1</field>
+            <field name="fecha_lanzamiento">1996-02-27</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="collection_johto" model="pokestore.collection">
+            <field name="name">Johto</field>
+            <field name="generacion">2</field>
+            <field name="fecha_lanzamiento">1999-11-21</field>
+            <field name="active">True</field>
+        </record>
+
+         <record id="collection_teselia" model="pokestore.collection">
+            <field name="name">Teselia</field>
+            <field name="generacion">5</field>
+            <field name="fecha_lanzamiento">2010-10-15</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="collection_legendarios_kanto" model="pokestore.collection">
+            <field name="name">Legendarios</field>
+            <field name="generacion">1</field>
+            <field name="fecha_lanzamiento">1997-10-15</field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

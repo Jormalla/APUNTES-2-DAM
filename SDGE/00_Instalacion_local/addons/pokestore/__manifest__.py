@@ -7,11 +7,18 @@
     "depends": ["base"],
     "data": [
         "security/ir.model.access.csv",
+        "security/pokestore_security.xml",
+        "data/pokestore_collection_data.xml",
         "views/pokestore_collection_views.xml",
         "views/pokestore_figure_views.xml",
         "views/pokestore_tag_views.xml",
         "views/pokestore_menus.xml",
     ],
+
+    "demo": [
+        "demo/pokestore_demo.xml",
+    ],
+    
     "application": True,
     "installable": True,
 }

@@ -1,0 +1,5 @@
+<odoo>
+    <record id="group_pokestore_manager" model="res.groups">
+        <field name="name">Responsable PokeStore</field>
+    </record>
+</odoo>

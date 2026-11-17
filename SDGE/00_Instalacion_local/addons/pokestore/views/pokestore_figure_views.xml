@@ -23,6 +23,7 @@
                 <sheet>
                     <group>
                         <group>
+                            <button name="action_agotar_stock" type="object" string="Agotar stock" class="btn-primary"/>
                             <field name="name"/>
                             <field name="pokemon"/>
                             <field name="collection_id"/>
@@ -42,6 +43,11 @@
                                     <field name="name" />
                                 </list>
                             </field>
+                        </page>
+                    </notebook>
+                    <notebook>
+                        <page string="Notas internas">
+                            <field name="notes"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -68,6 +74,18 @@
                 </group>
             </search>
         </field>
+    </record>
+    <!-- Agotar el stock de todos las figuras -->
+    <record id="pokestore_action_agotar_stock" model="ir.actions.server">
+        <field name="name">🗑️ Agotar stock</field>
+        <field name="model_id" ref="model_pokestore_figure"/>
+        <field name="binding_model_id" ref="model_pokestore_figure"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            records.action_agotar_stock()
+        </field>
+
     </record>
     <record id="pokestore_figure_action" model="ir.actions.act_window">
         <field name="name">Figuras</field>
