@@ -6,6 +6,7 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) {
         ClubDao dao = new ClubDao();
+        JugadorDao jdao = new JugadorDao();
         try {
             System.out.println("CLUBES INICIALES");
             for (Club club : dao.listar()) {
@@ -21,7 +22,7 @@ public class Main {
             System.out.println("Borrado: " + dao.borrar(id));
             System.out.println("¿Sigue existiendo? " + dao.buscar(id).isPresent());
             System.out.println(dao.listarPorCiudad("Granada"));
-            System.out.println(dao.insertarJugador("Jorge", 77, 10));
+            System.out.println(jdao.insertarJugador("Jorge", 7, 1));
         } catch (SQLException e) {
             System.err.println("Error de base de datos: " + e.getMessage());
         }
