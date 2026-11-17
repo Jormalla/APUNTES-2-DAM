@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,5 +83,21 @@ public class ClubDao {
                 filas.getString("nombre"),
                 filas.getString("ciudad"),
                 filas.getBigDecimal("presupuesto"));
+    }
+
+    // Devuelve una lista de clubes cuya ciudad coincida con el parametro
+    public List<Club> listarPorCiudad(String ciudad) throws SQLException {
+        // Listo los clubes
+        List<Club> clubes = listar();
+        List<Club> clubesDeCiudad = new ArrayList<>();
+        // Comprueba si la ciudad es la misma
+        for (Club club : clubes) {
+            if (club.ciudad().equalsIgnoreCase(ciudad)) {
+                clubesDeCiudad.add(club);
+            }
+        }
+        clubesDeCiudad.sort(Comparator.comparing(Club::nombre));
+
+        return clubesDeCiudad;
     }
 }

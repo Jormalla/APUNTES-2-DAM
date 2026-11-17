@@ -20,6 +20,7 @@ public class Main {
             System.out.println("Tras cambiar: " + dao.buscar(id).orElseThrow());
             System.out.println("Borrado: " + dao.borrar(id));
             System.out.println("¿Sigue existiendo? " + dao.buscar(id).isPresent());
+            System.out.println(dao.listarPorCiudad("Granada"));
         } catch (SQLException e) {
             System.err.println("Error de base de datos: " + e.getMessage());
         }
