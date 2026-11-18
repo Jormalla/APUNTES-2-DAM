@@ -127,10 +127,11 @@ public class ClubDao {
     // Borra el club solo si no tiene jugadores ni movimientos.
     // Devuelve true si se borró, false si el ID no existe.
     public boolean borrarSiVacio(int id) throws SQLException {
-        String sql = "DELETE FROM club WHERE id = ? AND NOT EXISTS (SELECT * FROM jugador WHERE jugador.club_id = club.id);";
+        String sql = "DELETE FROM club WHERE id = ? AND NOT EXISTS (SELECT * FROM jugador WHERE jugador.club_id = ?);";
         try (Connection conexion = Conexion.abrir();
             PreparedStatement sentencia = conexion.prepareStatement(sql)) {
             sentencia.setInt(1, id);
+            sentencia.setInt(2, id);
             return sentencia.executeUpdate() == 1;
         }
     }
