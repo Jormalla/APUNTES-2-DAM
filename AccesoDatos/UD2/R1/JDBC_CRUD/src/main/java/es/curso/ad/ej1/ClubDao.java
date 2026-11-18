@@ -140,7 +140,7 @@ public class ClubDao {
     // Devuelve true si se actualizó el club, false si no existe.
     public boolean aumentarPresupuesto(int id, BigDecimal cantidad) throws SQLException {
         if (cantidad == null || cantidad.signum() <= 0) {
-            throw new IllegalArgumentException("La cantidad debe ser positiva");
+            throw new SQLException("La cantidad debe ser positiva");
         }
         String sql = "UPDATE club SET presupuesto = presupuesto + ? WHERE id = ?";
         try (Connection conexion = Conexion.abrir();
