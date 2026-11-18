@@ -105,5 +105,54 @@ public class ClubDao {
         return clubesDeCiudad;
     }
 
-    
+    // Devuelve todos los clubes con su total de jugadores (0 si no tienen)
+    public List<ResumenClub> resumenClubes() throws SQLException {
+        String sql = "SELECT c.id, c.nombre, COUNT(j.id) AS total_jugadores "
+            + "FROM club c LEFT JOIN jugador j ON j.club_id = c.id "
+            + "GROUP BY c.id, c.nombre ORDER BY c.id";
+        List<ResumenClub> resumen = new ArrayList<>();
+        try (Connection conexion = Conexion.abrir();
+            PreparedStatement sentencia = conexion.prepareStatement(sql);
+            ResultSet filas = sentencia.executeQuery()) {
+            while (filas.next()) {
+                resumen.add(new ResumenClub(
+                    filas.getInt("id"),
+                    filas.getString("nombre"),
+                    filas.getLong("total_jugadores")));
+            }
+        }
+        return resumen;
+    }
+
+    // Borra el club solo si no tiene jugadores ni movimientos.
+    // Devuelve true si se borró, false si el ID no existe.
+    public boolean borrarSiVacio(int id) throws SQLException {
+        String sql = "DELETE FROM club WHERE id = ?";
+        try (Connection conexion = Conexion.abrir();
+            PreparedStatement sentencia = conexion.prepareStatement(sql)) {
+            sentencia.setInt(1, id);
+            return sentencia.executeUpdate() == 1;
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw new SQLException("No se puede borrar el club " + id
+                + ": tiene jugadores o movimientos asociados (la FK lo impide). "
+                + "Error MySQL " + e.getErrorCode()
+                + ", SQLState " + e.getSQLState() + ": " + e.getMessage(),
+                e.getSQLState(), e.getErrorCode(), e);
+        }
+    }
+
+    // Suma cantidad al presupuesto directamente en SQL, sin cargar la tabla.
+    // Devuelve true si se actualizó el club, false si no existe.
+    public boolean aumentarPresupuesto(int id, BigDecimal cantidad) throws SQLException {
+        if (cantidad == null || cantidad.signum() <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser positiva");
+        }
+        String sql = "UPDATE club SET presupuesto = presupuesto + ? WHERE id = ?";
+        try (Connection conexion = Conexion.abrir();
+            PreparedStatement sentencia = conexion.prepareStatement(sql)) {
+            sentencia.setBigDecimal(1, cantidad);
+            sentencia.setInt(2, id);
+            return sentencia.executeUpdate() == 1;
+        }
+    }
 }
