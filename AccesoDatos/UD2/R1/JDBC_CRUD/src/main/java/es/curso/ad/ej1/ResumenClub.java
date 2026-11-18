@@ -1,3 +1,3 @@
-package main.java.es.curso.ad.ej1;
+package es.curso.ad.ej1;
 
 public record ResumenClub(int id, String nombre, long totalJugadores) { }
