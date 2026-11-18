@@ -1,4 +1,4 @@
-package es.curso.ad.ej1;
+package main.java.es.curso.ad.ej1;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

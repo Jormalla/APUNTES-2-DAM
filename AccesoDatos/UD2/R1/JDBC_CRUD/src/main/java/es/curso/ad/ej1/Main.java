@@ -23,6 +23,7 @@ public class Main {
             System.out.println("¿Sigue existiendo? " + dao.buscar(id).isPresent());
             System.out.println(dao.listarPorCiudad("Granada"));
             System.out.println(jdao.insertarJugador("Jorge", 7, 1));
+            System.out.println(dao.resumenClubes());
         } catch (SQLException e) {
             System.err.println("Error de base de datos: " + e.getMessage());
         }
