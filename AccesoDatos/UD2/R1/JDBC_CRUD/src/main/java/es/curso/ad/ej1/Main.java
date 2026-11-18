@@ -29,7 +29,7 @@ public class Main {
             if (dao.borrarSiVacio(idClub)) {
                 System.out.println("Club con id: " + idClub + " eliminado.");
             } else {
-                System.err.println("¡ERROR! No se pudo eliminar el club con id: " + idClub + ". Existen 1 o más jugadores integrantes.");
+                System.err.println("¡ERROR! No se pudo eliminar el club con id: " + idClub + ". Existen 1 o más jugadores integrantes o existen movimientos asociados al club.");
             }
 
             // Incrementar presupuesto
