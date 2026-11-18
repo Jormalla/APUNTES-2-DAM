@@ -132,12 +132,6 @@ public class ClubDao {
             PreparedStatement sentencia = conexion.prepareStatement(sql)) {
             sentencia.setInt(1, id);
             return sentencia.executeUpdate() == 1;
-        } catch (SQLIntegrityConstraintViolationException e) {
-            throw new SQLException("No se puede borrar el club " + id
-                + ": tiene jugadores o movimientos asociados (la FK lo impide). "
-                + "Error MySQL " + e.getErrorCode()
-                + ", SQLState " + e.getSQLState() + ": " + e.getMessage(),
-                e.getSQLState(), e.getErrorCode(), e);
         }
     }
 
