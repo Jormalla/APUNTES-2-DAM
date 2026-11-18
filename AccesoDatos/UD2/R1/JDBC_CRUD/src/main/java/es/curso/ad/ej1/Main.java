@@ -36,6 +36,8 @@ public class Main {
             BigDecimal cantidadAumentar = BigDecimal.valueOf(10);
             if (dao.aumentarPresupuesto(idClub, cantidadAumentar)) {
                 System.out.println("Se aumento " + cantidadAumentar + " al club con id " + idClub);
+            } else {
+                System.err.println("El club con id " + idClub + " no existe.");
             }
         } catch (SQLException e) {
             System.err.println("Error de base de datos: " + e.getMessage());
