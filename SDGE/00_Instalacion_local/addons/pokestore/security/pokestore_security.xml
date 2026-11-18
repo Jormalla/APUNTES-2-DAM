@@ -1,5 +1,11 @@
 <odoo>
+    <record id="group_pokestore_user" model="res.groups">
+        <field name="name">Usuario PokeStore</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+    </record>
     <record id="group_pokestore_manager" model="res.groups">
         <field name="name">Responsable PokeStore</field>
+        <field name="implied_ids"
+            eval="[(4, ref('pokestore.group_pokestore_user'))]" />
     </record>
 </odoo>

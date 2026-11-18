@@ -9,11 +9,6 @@ class PokeStoreCollection(models.Model):
     fecha_lanzamiento = fields.Date(string="Fecha de lanzamiento", required=True)
     active = fields.Boolean(default=True)
 
-    collection_id = fields.Many2one(
-        "pokestore.collection",
-        string="Colección",
-        ondelete="restrict"
-    )
 
     figure_ids = fields.One2many(
         "pokestore.figure",

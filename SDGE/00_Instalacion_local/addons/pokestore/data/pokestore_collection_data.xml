@@ -22,9 +22,9 @@
             <field name="active">True</field>
         </record>
 
-        <record id="collection_legendarios_kanto" model="pokestore.collection">
+        <record id="collection_legendarios" model="pokestore.collection">
             <field name="name">Legendarios</field>
-            <field name="generacion">1</field>
+            <field name="generacion">8</field>
             <field name="fecha_lanzamiento">1997-10-15</field>
             <field name="active">True</field>
         </record>

@@ -23,14 +23,14 @@
             <field name="notes">Incluye base translúcida con efecto de fuego.</field>
         </record>
 
-        <!-- Figura 3: Exclusiva (Obligatorio incluir collection_id por @api.constrains) -->
+        <!-- Figura 3: Exclusiva -->
         <record id="figure_mewtwo_exclusive" model="pokestore.figure">
-            <field name="name">Mewtwo Edición Coleccionista Numerada</field>
+            <field name="name">Mewtwo Edición Coleccionista</field>
             <field name="pokemon">Mewtwo</field>
             <field name="rarity">exclusive</field>
             <field name="price">129.90</field>
             <field name="stock">3</field>
-            <field name="collection_id" ref="pokestore.collection_legendarios_kanto"/>
+            <field name="collection_id" ref="pokestore.collection_legendarios"/>
             <field name="notes">Revisar embalaje especial. Certificado de autenticidad incluido.</field>
         </record>
     </data>
