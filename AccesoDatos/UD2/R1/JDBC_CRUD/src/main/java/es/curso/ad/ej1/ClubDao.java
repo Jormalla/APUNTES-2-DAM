@@ -108,17 +108,17 @@ public class ClubDao {
     // Devuelve todos los clubes con su total de jugadores (0 si no tienen)
     public List<ResumenClub> resumenClubes() throws SQLException {
         String sql = "SELECT c.id, c.nombre, COUNT(j.id) AS total_jugadores "
-            + "FROM club c LEFT JOIN jugador j ON j.club_id = c.id "
-            + "GROUP BY c.id, c.nombre ORDER BY c.id";
+                + "FROM club c LEFT JOIN jugador j ON j.club_id = c.id "
+                + "GROUP BY c.id, c.nombre ORDER BY c.id";
         List<ResumenClub> resumen = new ArrayList<>();
         try (Connection conexion = Conexion.abrir();
-            PreparedStatement sentencia = conexion.prepareStatement(sql);
-            ResultSet filas = sentencia.executeQuery()) {
+                PreparedStatement sentencia = conexion.prepareStatement(sql);
+                ResultSet filas = sentencia.executeQuery()) {
             while (filas.next()) {
                 resumen.add(new ResumenClub(
-                    filas.getInt("id"),
-                    filas.getString("nombre"),
-                    filas.getLong("total_jugadores")));
+                        filas.getInt("id"),
+                        filas.getString("nombre"),
+                        filas.getLong("total_jugadores")));
             }
         }
         return resumen;
@@ -127,11 +127,13 @@ public class ClubDao {
     // Borra el club solo si no tiene jugadores ni movimientos.
     // Devuelve true si se borró, false si el ID no existe.
     public boolean borrarSiVacio(int id) throws SQLException {
-        String sql = "DELETE FROM club WHERE id = ? AND NOT EXISTS (SELECT * FROM jugador WHERE jugador.club_id = ?);";
+        String sql = "DELETE FROM club WHERE id = ? AND NOT EXISTS (SELECT 1 FROM jugador WHERE jugador.club_id = ?) AND NOT EXISTS (SELECT 1 FROM movimiento WHERE club_origen_id = ? OR club_destino_id = ?);";
         try (Connection conexion = Conexion.abrir();
-            PreparedStatement sentencia = conexion.prepareStatement(sql)) {
+                PreparedStatement sentencia = conexion.prepareStatement(sql)) {
             sentencia.setInt(1, id);
             sentencia.setInt(2, id);
+            sentencia.setInt(3, id);
+            sentencia.setInt(4, id);
             return sentencia.executeUpdate() == 1;
         }
     }
@@ -144,7 +146,7 @@ public class ClubDao {
         }
         String sql = "UPDATE club SET presupuesto = presupuesto + ? WHERE id = ?";
         try (Connection conexion = Conexion.abrir();
-            PreparedStatement sentencia = conexion.prepareStatement(sql)) {
+                PreparedStatement sentencia = conexion.prepareStatement(sql)) {
             sentencia.setBigDecimal(1, cantidad);
             sentencia.setInt(2, id);
             return sentencia.executeUpdate() == 1;
