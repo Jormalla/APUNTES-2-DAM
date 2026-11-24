@@ -10,7 +10,7 @@ import java.sql.Types;
 
 public class OperacionesClubes {
     public void transferir(int origenId, int destinoId,
-                           BigDecimal importe) throws SQLException {
+            BigDecimal importe) throws SQLException {
         if (origenId == destinoId || importe == null ||
                 importe.signum() <= 0) {
             throw new IllegalArgumentException("Transferencia no válida");
@@ -61,8 +61,8 @@ public class OperacionesClubes {
 
     public int contarJugadores(int clubId) throws SQLException {
         try (Connection conexion = Conexion.abrir();
-             CallableStatement sentencia = conexion.prepareCall(
-                     "{call contar_jugadores(?, ?)}")) {
+                CallableStatement sentencia = conexion.prepareCall(
+                        "{call contar_jugadores(?, ?)}")) {
             sentencia.setInt(1, clubId);
             sentencia.registerOutParameter(2, Types.INTEGER);
             sentencia.execute();
@@ -72,12 +72,51 @@ public class OperacionesClubes {
 
     public BigDecimal obtenerPresupuesto(int clubId) throws SQLException {
         try (Connection conexion = Conexion.abrir();
-             PreparedStatement sentencia = conexion.prepareStatement(
-                     "SELECT presupuesto FROM club WHERE id = ?")) {
+                PreparedStatement sentencia = conexion.prepareStatement(
+                        "SELECT presupuesto FROM club WHERE id = ?")) {
             sentencia.setInt(1, clubId);
             try (ResultSet filas = sentencia.executeQuery()) {
-                if (filas.next()) return filas.getBigDecimal(1);
+                if (filas.next())
+                    return filas.getBigDecimal(1);
                 throw new SQLException("No existe el club " + clubId);
+            }
+        }
+    }
+
+    public boolean deshacerMovimiento(long idMovimiento) throws SQLException {
+        try (Connection conexion = Conexion.abrir()) {
+            String consulta = "SELECT * FROM movimiento WHERE id = ?";
+            try (PreparedStatement sentencia = conexion.prepareStatement(consulta)) {
+                sentencia.setLong(1, idMovimiento);
+                try (ResultSet filas = sentencia.executeQuery()) {
+                    if (filas.next()) {
+                        // el movimiento existe
+                        BigDecimal importe = filas.getBigDecimal("importe");
+                        int origenClub = filas.getInt("club_origen_id");
+                        int destinoClub = filas.getInt("club_destino_id");
+                        conexion.setAutoCommit(false);
+
+                        String quitarADestino = "UPDATE club SET presupuesto = presupuesto - ? " +
+                                "WHERE id = ? AND presupuesto >= ?";
+                        try (PreparedStatement sentenciaQuitar = conexion.prepareStatement(quitarADestino)) {
+                            sentencia.setBigDecimal(1, importe);
+                            sentencia.setInt(2, destinoClub);
+                            sentencia.setBigDecimal(3, importe);
+                            if (sentencia.executeUpdate() != 1) {
+                                throw new SQLException("Origen inexistente o saldo insuficiente");
+                            }
+                        }
+
+                        String sumarOrigen
+                        try (PreparedStatement sentenciaSumar = conexion.prepareStatement(quitarADestino)) {
+                            
+                        } 
+                    } else {
+                        // no existe
+                        conexion.rollback();
+                        return false;
+                    }
+                }
             }
         }
     }
