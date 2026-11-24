@@ -13,6 +13,7 @@
         "views/pokestore_figure_views.xml",
         "views/pokestore_tag_views.xml",
         "views/pokestore_menus.xml",
+        "views/pokestore_res_partner_views.xml",
     ],
 
     "demo": [

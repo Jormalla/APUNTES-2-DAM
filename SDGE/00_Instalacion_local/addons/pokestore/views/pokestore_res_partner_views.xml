@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pokestore_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.pokestore</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Collecionista Pokémon" name="collecionista_pokemon">
+                    <group string="PokeStore">
+                        <field name="codigo_coleccionista" />
+                        <field name="pokemon_favorito" />
+                        <field name="nivel_coleccionista" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

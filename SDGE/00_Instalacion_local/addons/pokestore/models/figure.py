@@ -34,6 +34,11 @@ class PokeStoreFigure(models.Model):
         ondelete="restrict"
     )
 
+    distribuidor_id = fields.Many2one(
+        "res.partner",
+        string="Distribuidor/proveedor-pokestore"
+    )
+
     # Campo calculado
     stock_value = fields.Float(String="Valor en stock", compute="_compute_stock_value", store=True)
     # ==============================================
