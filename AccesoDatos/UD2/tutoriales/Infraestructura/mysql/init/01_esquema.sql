@@ -1,6 +1,12 @@
 USE ad_ud2;
 
-CREATE TABLE IF NOT EXISTS club (
+DROP PROCEDURE IF EXISTS contar_jugadores;
+DROP TABLE IF EXISTS fichaje;
+DROP TABLE IF EXISTS movimiento;
+DROP TABLE IF EXISTS jugador;
+DROP TABLE IF EXISTS club;
+
+CREATE TABLE club (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(90) NOT NULL UNIQUE,
   ciudad VARCHAR(90) NOT NULL,
@@ -8,7 +14,7 @@ CREATE TABLE IF NOT EXISTS club (
   CONSTRAINT chk_presupuesto CHECK (presupuesto >= 0)
 );
 
-CREATE TABLE IF NOT EXISTS jugador (
+CREATE TABLE jugador (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(90) NOT NULL,
   dorsal INT NOT NULL,
@@ -18,7 +24,7 @@ CREATE TABLE IF NOT EXISTS jugador (
   CONSTRAINT uq_dorsal_club UNIQUE (club_id, dorsal)
 );
 
-CREATE TABLE IF NOT EXISTS movimiento (
+CREATE TABLE movimiento (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   club_origen_id INT NOT NULL,
   club_destino_id INT NOT NULL,
@@ -29,7 +35,7 @@ CREATE TABLE IF NOT EXISTS movimiento (
   CONSTRAINT fk_mov_destino FOREIGN KEY (club_destino_id) REFERENCES club(id)
 );
 
-CREATE TABLE IF NOT EXISTS fichaje (
+CREATE TABLE fichaje (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   jugador_id INT NOT NULL,
   club_id INT NOT NULL,
@@ -43,16 +49,13 @@ CREATE TABLE IF NOT EXISTS fichaje (
 INSERT INTO club (id, nombre, ciudad, presupuesto) VALUES
   (1, 'Granada CF', 'Granada', 2500.00),
   (2, 'Málaga CF', 'Málaga', 1500.00),
-  (3, 'Cádiz CF', 'Cádiz', 1000.00)
-ON DUPLICATE KEY UPDATE id = id;
+  (3, 'Cádiz CF', 'Cádiz', 1000.00);
 
 INSERT INTO jugador (id, nombre, dorsal, club_id) VALUES
   (1, 'Lucía', 10, 1),
   (2, 'Pablo', 7, 1),
-  (3, 'Sara', 9, 2)
-ON DUPLICATE KEY UPDATE id = id;
+  (3, 'Sara', 9, 2);
 
-DROP PROCEDURE IF EXISTS contar_jugadores;
 DELIMITER //
 CREATE PROCEDURE contar_jugadores(IN p_club_id INT, OUT p_total INT)
 BEGIN
