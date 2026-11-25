@@ -96,26 +96,50 @@ public class OperacionesClubes {
                         int destinoClub = filas.getInt("club_destino_id");
                         conexion.setAutoCommit(false);
 
+                        // Se le quita el dinero a lo que era destino
                         String quitarADestino = "UPDATE club SET presupuesto = presupuesto - ? " +
                                 "WHERE id = ? AND presupuesto >= ?";
                         try (PreparedStatement sentenciaQuitar = conexion.prepareStatement(quitarADestino)) {
-                            sentencia.setBigDecimal(1, importe);
-                            sentencia.setInt(2, destinoClub);
-                            sentencia.setBigDecimal(3, importe);
-                            if (sentencia.executeUpdate() != 1) {
-                                throw new SQLException("Origen inexistente o saldo insuficiente");
+                            sentenciaQuitar.setBigDecimal(1, importe);
+                            sentenciaQuitar.setInt(2, destinoClub);
+                            sentenciaQuitar.setBigDecimal(3, importe);
+                            if (sentenciaQuitar.executeUpdate() != 1) {
+                                throw new SQLException("Destino inexistente o saldo insuficiente");
                             }
                         }
 
-                        String sumarOrigen
-                        try (PreparedStatement sentenciaSumar = conexion.prepareStatement(quitarADestino)) {
-                            
-                        } 
+                        // Se le suma el dinero a lo que era el origen
+                        String sumaOrigen = "UPDATE club SET presupuesto = presupuesto + ? WHERE id = ?";
+                        try (PreparedStatement sentenciaSumar = conexion.prepareStatement(sumaOrigen)) {
+                            sentenciaSumar.setBigDecimal(1, importe);
+                            sentenciaSumar.setInt(2, origenClub);
+                            if (sentenciaSumar.executeUpdate() != 1) {
+                                throw new SQLException("El club origen no existe");
+                            }
+                        }
+
+                        // Eliminar movimiento
+                        String eliminaMovimiento = "DELETE FROM movimiento WHERE id = ?";
+                        try (PreparedStatement sentenciaEliminar = conexion.prepareStatement(eliminaMovimiento)) {
+                            sentenciaEliminar.setLong(1, idMovimiento);
+                            if (sentenciaEliminar.executeUpdate() != 1) {
+                                throw new SQLException("fallo al eliminar el movimiento");
+                            }
+                        }
+                        conexion.commit();
+                        return true;
+
                     } else {
                         // no existe
-                        conexion.rollback();
                         return false;
                     }
+                } catch (SQLException | RuntimeException e) {
+                    try {
+                        conexion.rollback();
+                    } catch (SQLException errorRollback) {
+                        e.addSuppressed(errorRollback);
+                    }
+                    throw e;
                 }
             }
         }
