@@ -84,68 +84,62 @@ public class OperacionesClubes {
     }
 
     public boolean deshacerMovimiento(long idMovimiento) throws SQLException {
-        try (Connection conexion = Conexion.abrir()) {
-            String consulta = "SELECT * FROM movimiento WHERE id = ?";
-            try (PreparedStatement sentencia = conexion.prepareStatement(consulta)) {
-                sentencia.setLong(1, idMovimiento);
-                try (ResultSet filas = sentencia.executeQuery()) {
-                    if (filas.next()) {
-                        // el movimiento existe
-                        BigDecimal importe = filas.getBigDecimal("importe");
-                        int origenClub = filas.getInt("club_origen_id");
-                        int destinoClub = filas.getInt("club_destino_id");
-                        conexion.setAutoCommit(false);
-
-                        // Se le quita el dinero a lo que era destino
-                        String quitarADestino = "UPDATE club SET presupuesto = presupuesto - ? " +
-                                "WHERE id = ? AND presupuesto >= ?";
-                        try (PreparedStatement sentenciaQuitar = conexion.prepareStatement(quitarADestino)) {
-                            sentenciaQuitar.setBigDecimal(1, importe);
-                            sentenciaQuitar.setInt(2, destinoClub);
-                            sentenciaQuitar.setBigDecimal(3, importe);
-                            if (sentenciaQuitar.executeUpdate() != 1) {
-                                throw new SQLException("Destino inexistente o saldo insuficiente");
-                            }
-                        }
-
-                        // Se le suma el dinero a lo que era el origen
-                        String sumaOrigen = "UPDATE club SET presupuesto = presupuesto + ? WHERE id = ?";
-                        try (PreparedStatement sentenciaSumar = conexion.prepareStatement(sumaOrigen)) {
-                            sentenciaSumar.setBigDecimal(1, importe);
-                            sentenciaSumar.setInt(2, origenClub);
-                            if (sentenciaSumar.executeUpdate() != 1) {
-                                throw new SQLException("El club origen no existe");
-                            }
-                        }
-
-                        // Eliminar movimiento
-                        String eliminaMovimiento = "DELETE FROM movimiento WHERE id = ?";
-                        try (PreparedStatement sentenciaEliminar = conexion.prepareStatement(eliminaMovimiento)) {
-                            sentenciaEliminar.setLong(1, idMovimiento);
-                            if (sentenciaEliminar.executeUpdate() != 1) {
-                                throw new SQLException("fallo al eliminar el movimiento");
-                            }
-                        }
-                        conexion.commit();
-                        return true;
-
-                    } else {
-                        // no existe
+        try (Connection con = Conexion.abrir()) {
+            con.setAutoCommit(false);
+            try {
+                long ultimoId;
+                int origen, destino;
+                BigDecimal importe;
+                try (PreparedStatement st = con.prepareStatement(
+                        "SELECT id, club_origen_id, club_destino_id, importe " +
+                                "FROM movimiento ORDER BY id DESC LIMIT 1 FOR UPDATE");
+                        ResultSet rs = st.executeQuery()) {
+                    if (!rs.next()) {
+                        con.rollback();
                         return false;
                     }
-                } catch (SQLException | RuntimeException e) {
-                    try {
-                        conexion.rollback();
-                    } catch (SQLException errorRollback) {
-                        e.addSuppressed(errorRollback);
-                    }
-                    throw e;
+                    origen = rs.getInt("club_origen_id");
+                    destino = rs.getInt("club_destino_id");
+                    importe = rs.getBigDecimal("importe");
                 }
+
+                // La devolución falla si el destino ya no tiene suficiente saldo.
+                try (PreparedStatement st = con.prepareStatement(
+                        "UPDATE club SET presupuesto = presupuesto - ? " +
+                                "WHERE id = ? AND presupuesto >= ?")) {
+                    st.setBigDecimal(1, importe);
+                    st.setInt(2, destino);
+                    st.setBigDecimal(3, importe);
+                    if (st.executeUpdate() != 1)
+                        throw new SQLException("No existe destino o no puede devolver el importe");
+                }
+                try (PreparedStatement st = con.prepareStatement(
+                        "UPDATE club SET presupuesto = presupuesto + ? WHERE id = ?")) {
+                    st.setBigDecimal(1, importe);
+                    st.setInt(2, origen);
+                    if (st.executeUpdate() != 1)
+                        throw new SQLException("No existe club de origen");
+                }
+                try (PreparedStatement st = con.prepareStatement(
+                        "DELETE FROM movimiento WHERE id = ?")) {
+                    st.setLong(1, idMovimiento);
+                    if (st.executeUpdate() != 1)
+                        throw new SQLException("Movimiento no encontrado al eliminar");
+                }
+                con.commit();
+                return true;
+            } catch (SQLException | RuntimeException e) {
+                try {
+                    con.rollback();
+                } catch (SQLException error) {
+                    e.addSuppressed(error);
+                }
+                throw e;
             }
         }
     }
 
-    public void ficharJugador(int idJugador, BigDecimal coste, int idClub) throws SQLException  {
+    public void ficharJugador(int idJugador, BigDecimal coste, int idClub) throws SQLException {
         if (coste.signum() <= 0) {
             throw new IllegalArgumentException("Fichaje no válido: el coste debe ser > 0");
         }
@@ -154,9 +148,9 @@ public class OperacionesClubes {
             try {
                 // Comprueba que existe el jugador
                 String sleccionaJugador = "SELECT 1 FROM jugador WHERE id = ?";
-                try (PreparedStatement sentencia = conexion.prepareStatement(sleccionaJugador)){
+                try (PreparedStatement sentencia = conexion.prepareStatement(sleccionaJugador)) {
                     sentencia.setInt(1, idJugador);
-                    try (ResultSet filas = sentencia.executeQuery()){
+                    try (ResultSet filas = sentencia.executeQuery()) {
                         if (!filas.next()) {
                             throw new IllegalArgumentException("Fichaje no válido: No existe el jugador");
                         }
@@ -176,9 +170,10 @@ public class OperacionesClubes {
                 }
 
                 // Aplica el fichaje
-                String cambiaClub = "UPDATE jugador SET club_id = ?";
+                String cambiaClub = "UPDATE jugador SET club_id = ? WHERE id = ?";
                 try (PreparedStatement sentencia = conexion.prepareStatement(cambiaClub)) {
                     sentencia.setInt(1, idClub);
+                    sentencia.setInt(2, idJugador);
                     sentencia.executeUpdate();
                 }
 
@@ -202,5 +197,22 @@ public class OperacionesClubes {
                 throw e;
             }
         }
+    }
+
+    public BigDecimal presupuestoTotalPorCiudad(String ciudad) throws SQLException {
+        try (Connection conexion = Conexion.abrir()) {
+            String presupuestoClubesEnCiudad = "SELECT SUM(presupuesto) as total FROM club WHERE ciudad = ?";
+            try (PreparedStatement sentencia = conexion.prepareStatement(presupuestoClubesEnCiudad)) {
+                sentencia.setString(1, ciudad);
+                try (ResultSet filas = sentencia.executeQuery()) {
+                        if (!filas.next()) {
+                            return new BigDecimal(0);
+                        } else {
+                            return filas.getBigDecimal("total");
+                        }
+                    }
+            }
+        }
+
     }
 }
