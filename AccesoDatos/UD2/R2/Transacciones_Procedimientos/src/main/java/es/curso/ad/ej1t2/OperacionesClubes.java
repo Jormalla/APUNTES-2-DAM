@@ -1,4 +1,4 @@
-package es.curso.ad.t02;
+package es.curso.ad.ej1t2;
 
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
