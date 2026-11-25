@@ -143,20 +143,25 @@ public class OperacionesClubes {
         if (coste.signum() <= 0) {
             throw new IllegalArgumentException("Fichaje no válido: el coste debe ser > 0");
         }
-
+        
         try (Connection conexion = Conexion.abrir()) {
+            conexion.setAutoCommit(false);
             try {
                 // Comprueba que existe el jugador
-                String sleccionaJugador = "SELECT 1 FROM jugador WHERE id = ?";
+                String sleccionaJugador = "SELECT club_id FROM jugador WHERE id = ?";
                 try (PreparedStatement sentencia = conexion.prepareStatement(sleccionaJugador)) {
                     sentencia.setInt(1, idJugador);
                     try (ResultSet filas = sentencia.executeQuery()) {
                         if (!filas.next()) {
                             throw new IllegalArgumentException("Fichaje no válido: No existe el jugador");
+                        } else {
+                            int idClubJugador = filas.getInt("club_id");
+                            if (idClubJugador == idClub) {
+                                throw new IllegalArgumentException("Fichaje no válido: El club ya lo tiene fichado");
+                            }
                         }
                     }
                 }
-                conexion.setAutoCommit(false);
                 // Comprueba que el club existe y el saldo es suficiente + resta el coste
                 String quitaCoste = "UPDATE club SET presupuesto = presupuesto - ? " +
                         "WHERE id = ? AND presupuesto >= ?";
