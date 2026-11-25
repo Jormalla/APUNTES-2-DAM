@@ -4,7 +4,7 @@
     "summary": "Gestión de figuras coleccionables Pokémon",
     "category": "Sales",
     "license": "LGPL-3",
-    "depends": ["base"],
+    "depends": ["base", "sale", "crm"],
     "data": [
         "security/pokestore_security.xml",
         "security/ir.model.access.csv",
@@ -14,6 +14,7 @@
         "views/pokestore_tag_views.xml",
         "views/pokestore_menus.xml",
         "views/pokestore_res_partner_views.xml",
+        "views/pokestore_sale_order_views.xml",
     ],
 
     "demo": [

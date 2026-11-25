@@ -27,7 +27,7 @@
                             <field name="name"/>
                             <field name="pokemon"/>
                             <field name="collection_id"/>
-                             <field name="tag_ids" widget="many2many_tags" />
+                            <field name="tag_ids" widget="many2many_tags" />
                         </group>
                         <group>
                             <field name="rarity"/>
@@ -35,6 +35,9 @@
                             <field name="stock"/>
                             <field name="stock_value" readonly="1"/> <!--readonly 1 hace que no se pueda editar desde odoo-->
                             <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="distribuidor_id"/>
                         </group>
                     </group>
                     <notebook>
