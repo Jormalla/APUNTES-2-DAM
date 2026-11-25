@@ -32,11 +32,13 @@ CREATE TABLE IF NOT EXISTS movimiento (
 CREATE TABLE IF NOT EXISTS fichaje (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   jugador_id INT NOT NULL,
+  club_id INT NOT NULL,
   coste DECIMAL(10,2) NOT NULL,
   fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT chk_coste CHECK (coste > 0),
-  CONSTRAINT fk_jugador FOREIGN KEY (jugador_id) REFERENCES jugador(id)
-)
+  CONSTRAINT fk_jugador FOREIGN KEY (jugador_id) REFERENCES jugador(id),
+  CONSTRAINT fk_club FOREIGN KEY (club_id) REFERENCES club(id)
+);
 
 INSERT INTO club (id, nombre, ciudad, presupuesto) VALUES
   (1, 'Granada CF', 'Granada', 2500.00),

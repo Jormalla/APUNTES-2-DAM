@@ -144,4 +144,63 @@ public class OperacionesClubes {
             }
         }
     }
+
+    public void ficharJugador(int idJugador, BigDecimal coste, int idClub) throws SQLException  {
+        if (coste.signum() <= 0) {
+            throw new IllegalArgumentException("Fichaje no válido: el coste debe ser > 0");
+        }
+
+        try (Connection conexion = Conexion.abrir()) {
+            try {
+                // Comprueba que existe el jugador
+                String sleccionaJugador = "SELECT 1 FROM jugador WHERE id = ?";
+                try (PreparedStatement sentencia = conexion.prepareStatement(sleccionaJugador)){
+                    sentencia.setInt(1, idJugador);
+                    try (ResultSet filas = sentencia.executeQuery()){
+                        if (!filas.next()) {
+                            throw new IllegalArgumentException("Fichaje no válido: No existe el jugador");
+                        }
+                    }
+                }
+                conexion.setAutoCommit(false);
+                // Comprueba que el club existe y el saldo es suficiente + resta el coste
+                String quitaCoste = "UPDATE club SET presupuesto = presupuesto - ? " +
+                        "WHERE id = ? AND presupuesto >= ?";
+                try (PreparedStatement sentencia = conexion.prepareStatement(quitaCoste)) {
+                    sentencia.setBigDecimal(1, coste);
+                    sentencia.setInt(2, idClub);
+                    sentencia.setBigDecimal(3, coste);
+                    if (sentencia.executeUpdate() != 1) {
+                        throw new SQLException("Club inexistente o saldo insuficiente");
+                    }
+                }
+
+                // Aplica el fichaje
+                String cambiaClub = "UPDATE jugador SET club_id = ?";
+                try (PreparedStatement sentencia = conexion.prepareStatement(cambiaClub)) {
+                    sentencia.setInt(1, idClub);
+                    sentencia.executeUpdate();
+                }
+
+                // Registra el fichaje
+                String registrarFichaje = "INSERT INTO fichaje(" +
+                        "jugador_id, coste, club_id) VALUES (?, ?, ?)";
+                try (PreparedStatement sentencia = conexion.prepareStatement(registrarFichaje)) {
+                    sentencia.setInt(1, idJugador);
+                    sentencia.setBigDecimal(2, coste);
+                    sentencia.setInt(3, idClub);
+                    sentencia.executeUpdate();
+                }
+
+                conexion.commit();
+            } catch (SQLException | RuntimeException e) {
+                try {
+                    conexion.rollback();
+                } catch (SQLException errorRollback) {
+                    e.addSuppressed(errorRollback);
+                }
+                throw e;
+            }
+        }
+    }
 }
