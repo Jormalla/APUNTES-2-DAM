@@ -15,6 +15,7 @@
         "views/pokestore_menus.xml",
         "views/pokestore_res_partner_views.xml",
         "views/pokestore_sale_order_views.xml",
+        "views/pokestore_crm_lead_views.xml",
     ],
 
     "demo": [

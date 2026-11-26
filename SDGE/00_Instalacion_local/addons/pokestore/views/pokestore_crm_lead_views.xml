@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pokestore_crm_lead_view_form" model="ir.ui.view">
+        <field name="name">crm.lead.form.pokestore</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='opportunity_partner']" position="after">
+                <group string="PokeStore" name="pokestore_crm" invisible="type == 'lead'">
+                    <field name="pokemon_wanted"/>
+                    <field name="collection_interest_id"/>
+                    <field name="estimated_figure_count"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pokestore_crm_opportunity_view_search" model="ir.ui.view">
+        <field name="name">crm.lead.search.pokestore</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter
+                    name="pokestore_has_collection"
+                    string="Con colección PokeStore"
+                    domain="[('collection_interest_id', '!=', False)]"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

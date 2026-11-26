@@ -4,7 +4,16 @@ class ResPartner(models.Model):
 
     codigo_coleccionista = fields.Integer(string = "Código collecionista")
     pokemon_favorito = fields.Char(string = "Pokémon favorito")
-    nivel_coleccionista = fields.Integer(string = "Nivel de coleccionista")
+    nivel_coleccionista = fields.Selection(
+        [
+            ("inicial", "Inicial"),
+            ("avanzado", "Avanzado"),
+            ("experto", "Experto")
+        ],
+        string="Nivel de coleccionista",
+        default="inicial",
+        required=True
+    )
 
     figure_ids = fields.One2many(
         "pokestore.figure",
